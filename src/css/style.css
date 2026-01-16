@@ -1,0 +1,1380 @@
+﻿/* ==============================
+   Orizon 14 - Partie 1/3
+   Global / Navbar / Footer / Buttons / Forms / Modals
+   ~600 lignes
+============================== */
+
+/* ==============================
+   RESET / GLOBAL STYLES
+============================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    background: linear-gradient(135deg, #fdfbf7, #f5f1ed);
+    color: #5d4e47;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ==============================
+   CONTAINERS / LAYOUT
+============================== */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Flex utilities */
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Spacing utilities */
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 1rem; }
+.p-4 { padding: 1.5rem; }
+
+/* ==============================
+   TYPOGRAPHIE
+============================== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap');
+
+h1, h2, h3, h4, h5, h6 {
+    color: #3e2723;
+    font-weight: 700;
+    line-height: 1.2;
+    font-family: 'Playfair Display', serif;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+    font-size: 1rem;
+    color: #6d5d56;
+}
+
+/* ==============================
+   NAVBAR
+============================== */
+.navbar {
+    width: 100%;
+    background: linear-gradient(90deg, #6d5d56, #8b7355);
+    color: white;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 12px rgba(61,39,31,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar .logo h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+}
+
+.navbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar .nav-links li {
+    position: relative;
+}
+
+.navbar .nav-link {
+    color: #fff;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+}
+
+.navbar .user-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar .btn-logout {
+    background: #a08379;
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-logout:hover {
+    background: #916e5e;
+    transform: translateY(-2px);
+}
+
+/* Hamburger menu responsive */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+    .navbar .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: linear-gradient(180deg, #ff6b35, #ff8c5a);
+        border-radius: 0 0 12px 12px;
+        overflow: hidden;
+    }
+
+    .navbar .nav-links.show {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.btn-primary {
+    background: linear-gradient(135deg, #8b7355, #a08379);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(61,39,31,0.15);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(61,39,31,0.25);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #9b8b7e, #a89a8e);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(61,39,31,0.15);
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(61,39,31,0.25);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(61,39,31,0.25);
+}
+
+.btn-small {
+    background: linear-gradient(135deg, #a89a8e, #b9a99a);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+    transform: translateY(-1px);
+}
+
+/* ==============================
+   FORMS / INPUTS
+============================== */
+input, textarea {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #d4cac0;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #fdfbf7;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #8b7355;
+    box-shadow: 0 0 8px rgba(139,115,85,0.3);
+    background: #fff;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: #5d4e47;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    padding: 2rem;
+}
+
+/* ==============================
+   CARDS
+============================== */
+.login-card {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.12);
+    transition: all 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(61,39,31,0.18);
+}
+
+.login-header h1 {
+    font-size: 2rem;
+    color: #8b7355;
+    margin-bottom: 0.25rem;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+
+.login-header p {
+    text-align: center;
+    color: #9b8b7e;
+    font-size: 0.9rem;
+}
+
+/* ==============================
+   MODALS
+============================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(61,39,31,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 2000;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 15px 35px rgba(61,39,31,0.25);
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #9b8b7e;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #8b7355;
+}
+
+/* ==============================
+   DIVIDERS
+============================== */
+.login-divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    font-weight: 600;
+    color: #9b8b7e;
+    position: relative;
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #d4cac0;
+}
+
+.login-divider::before { left: 0; }
+.login-divider::after { right: 0; }
+
+/* ==============================
+   RESPONSIVE UTILITIES
+============================== */
+@media (max-width: 1024px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    .container { width: 95%; }
+    .login-card { padding: 1.5rem; }
+    .navbar .nav-links { gap: 0.5rem; }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+}
+/* ==============================
+   Orizon 14 - Partie 2/3
+   Home / Menu / Chat / Admin / Tabs / Tables / Listes
+   ~600 lignes
+============================== */
+
+/* ==============================
+   HOME SECTION
+============================== */
+.welcome-section {
+    background: linear-gradient(135deg, #f5f1ed, #ede5df);
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.08);
+    transition: all 0.3s ease;
+    border-left: 6px solid #a08379;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    color: #8b7355;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    color: #6d5d56;
+}
+
+.welcome-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(61,39,31,0.12);
+}
+
+/* ==============================
+   STATS / CARDS
+============================== */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #a89a8e, #b9a99a);
+    border-radius: 8px;
+    padding: 1.5rem;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(61,39,31,0.12);
+    transition: all 0.3s ease;
+}
+
+.stat-card h3 {
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.stat-card p {
+    font-size: 0.9rem;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(61,39,31,0.18);
+}
+
+/* ==============================
+   EVENTS / CARDS
+============================== */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.event-card {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.1);
+    transition: all 0.3s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(61,39,31,0.15);
+}
+
+.event-date {
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.event-date .day {
+    font-size: 1.75rem;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+
+.event-date .month {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.event-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.event-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.25rem;
+    color: #3e2723;
+    font-family: 'Playfair Display', serif;
+}
+
+.event-content p.description {
+    font-size: 0.85rem;
+    color: #9b8b7e;
+}
+
+/* ==============================
+   MENU / PRODUCT LIST
+============================== */
+.menu-container {
+    margin: 2rem 0;
+}
+
+.menu-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.menu-header h1 {
+    color: #8b7355;
+    font-size: 2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.menu-subtitle {
+    font-size: 1rem;
+    color: #6d5d56;
+}
+
+.menu-search {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    gap: 0.5rem;
+}
+
+.menu-search input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    border: 1px solid #d4cac0;
+    font-size: 1rem;
+}
+
+.menu-search button {
+    background: linear-gradient(135deg, #a08379, #916e5e);
+    color: white;
+    padding: 0 1rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-search button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(61,39,31,0.2);
+}
+
+/* Menu items */
+.menu-item {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.08);
+    transition: all 0.3s ease;
+    border-left: 4px solid #a08379;
+}
+
+.menu-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(61,39,31,0.12);
+}
+
+.menu-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.menu-item-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #3e2723;
+    font-family: 'Playfair Display', serif;
+}
+
+.menu-item-info p {
+    font-size: 0.85rem;
+    color: #9b8b7e;
+}
+
+/* ==============================
+   CHAT / MESSAGING
+============================== */
+.chat-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.chat-sidebar {
+    width: 280px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.chat-sidebar:hover {
+    transform: translateY(-2px);
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #8b7355, #a08379);
+    color: white;
+}
+
+.chat-tabs {
+    display: flex;
+    justify-content: space-around;
+    background: #fdfbf7;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    border-bottom: 3px solid #8b7355;
+    color: #8b7355;
+}
+
+.chat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.chat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.chat-item.active,
+.chat-item:hover {
+    background: rgba(139,115,85,0.1);
+}
+
+.chat-item .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #8b7355;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.chat-item .avatar.group {
+    background: #c07656;
+}
+
+.chat-info h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #3e2723;
+}
+
+.chat-info p {
+    font-size: 0.75rem;
+    color: #9b8b7e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Chat main window */
+.chat-main {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 0.5rem;
+    border-top: 1px solid #e8dcd0;
+    gap: 0.5rem;
+}
+
+.message-input {
+    flex: 1;
+    border-radius: 4px;
+    border: 1px solid #d4cac0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+}
+
+.btn-send {
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    color: white;
+    padding: 0 1rem;
+    border-radius: 4px;
+}
+
+/* ==============================
+   ADMIN PANEL
+============================== */
+.admin-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-tab {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #fdfbf7;
+    color: #5d4e47;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.admin-tab.active {
+    background: linear-gradient(135deg, #8b7355, #a08379);
+    color: white;
+    box-shadow: 0 5px 15px rgba(139,115,85,0.2);
+}
+
+.admin-content {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 10px 25px rgba(61,39,31,0.08);
+    margin-bottom: 2rem;
+}
+
+.pending-list,
+.events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pending-card,
+.event-admin-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fdfbf7;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 5px 12px rgba(61,39,31,0.05);
+    transition: all 0.3s ease;
+    border-left: 4px solid #a08379;
+}
+
+.pending-card:hover,
+.event-admin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(61,39,31,0.1);
+}
+
+.pending-actions button,
+.event-admin-actions button {
+    margin-left: 0.5rem;
+}
+
+/* Users table */
+.users-table-wrapper {
+    overflow-x: auto;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+.users-table th {
+    background: #fdfbf7;
+    font-weight: 600;
+    color: #3e2723;
+}
+
+.users-table tr:nth-child(even) {
+    background: #fdfbf7;
+}
+
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-success {
+    background: #8b7355;
+}
+
+.badge-warning {
+    background: #c07656;
+}
+
+.badge-danger {
+    background: #d8937f;
+}
+
+/* ==============================
+   Responsive Partie 2
+============================== */
+@media (max-width: 1024px) {
+    .chat-container { flex-direction: column; }
+    .chat-sidebar { width: 100%; margin-bottom: 1rem; }
+}
+
+@media (max-width: 768px) {
+    .events-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .stats-section { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+}
+
+@media (max-width: 480px) {
+    .chat-sidebar { flex-direction: row; overflow-x: auto; }
+    .menu-search { flex-direction: column; gap: 0.5rem; }
+}
+/* ==============================
+   Orizon 14 - Partie 3/3
+   Schedule / Events / Legends / Animations / Responsive
+   ~600 lignes
+============================== */
+
+/* ==============================
+   SCHEDULE WRAPPER
+============================== */
+.schedule-wrapper {
+    background: linear-gradient(135deg, #fdfbf7, #f5f1ed);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(61,39,31,0.08);
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.schedule-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(61,39,31,0.12);
+}
+
+.schedule-header {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #8b7355;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.schedule-table {
+    display: grid;
+    grid-template-columns: 80px repeat(7, 1fr);
+    gap: 1px;
+    background: #e8dcd0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-time-col {
+    background: #fdfbf7;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-slot {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.85rem;
+    text-align: center;
+    border-bottom: 1px solid #e8dcd0;
+    color: #6d5d56;
+}
+
+.day-header {
+    background: #ede5df;
+    text-align: center;
+    font-weight: 600;
+    border-bottom: 2px solid #d4cac0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.day-header .day-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #5d4e47;
+}
+
+.day-header .day-date {
+    font-size: 0.7rem;
+    color: #9b8b7e;
+}
+
+/* SCHEDULE CELL / COURSE ITEMS */
+.schedule-cell {
+    position: relative;
+    min-height: 60px;
+    padding: 2px;
+}
+
+.course-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f5f1ed;
+    border: 1px solid #d4cac0;
+}
+
+.course-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(61,39,31,0.2);
+    z-index: 10;
+}
+
+/* COURSE TYPES - Cours sobres avec fond clair et bordure fine */
+.course-item.cours {
+    background: #fdfbf7;
+    border: 1px solid #d4cac0;
+    color: #5d4e47;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.3);
+}
+
+/* EVENT - Mis en valeur avec couleurs profondes */
+.course-item.event {
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(192,118,86,0.4);
+}
+
+.course-item.seminar {
+    background: linear-gradient(135deg, #8b7355, #a08379);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(139,115,85,0.3);
+}
+
+.course-item.practical {
+    background: linear-gradient(135deg, #9b8b7e, #b9a99a);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(155,139,126,0.3);
+}
+
+/* Différents cours - Couleurs organiques */
+.course-item.maths{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.physique{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.chimie{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.info{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.anglais{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.bio{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.histoire{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.philo{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.eco{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.stats{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.semin{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.revise{
+    background: #fdfbf7;
+    color: #5d4e47;
+    border: 1px solid #d4cac0;
+    box-shadow: 0 2px 8px rgba(212,202,192,0.2);
+}
+
+.course-item.sport{
+    background: linear-gradient(135deg, #9b8b7e, #b9a99a);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 6px 16px rgba(155,139,126,0.3);
+}
+
+.course-item.bar{
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 6px 16px rgba(192,118,86,0.4);
+}
+
+.course-item.pause{
+    background: #f5f1ed;
+    color: #9b8b7e;
+    border: 1px solid #e8dcd0;
+    box-shadow: 0 2px 6px rgba(232,220,208,0.2);
+}
+
+/* ==============================
+   LEGEND
+============================== */
+.schedule-legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem;
+    background: #ede5df;
+    border-radius: 8px;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #5d4e47;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.legend-color.cours { 
+    background: #fdfbf7; 
+    border: 1px solid #d4cac0; 
+}
+
+.legend-color.event { 
+    background: linear-gradient(135deg, #c07656, #d8937f);
+    border: none;
+}
+
+.legend-color.seminar { 
+    background: linear-gradient(135deg, #8b7355, #a08379);
+    border: none;
+}
+
+.legend-color.practical { 
+    background: linear-gradient(135deg, #9b8b7e, #b9a99a);
+    border: none;
+}
+
+/* ==============================
+   ANIMATIONS
+============================== */
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.welcome-section,
+.stat-card,
+.event-card,
+.menu-item,
+.chat-item,
+.pending-card,
+.event-admin-card {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.btn-primary,
+.btn-send,
+.admin-tab.active {
+    animation: pulse 1.2s infinite alternate;
+}
+
+/* ==============================
+   MEDIA QUERIES (RESPONSIVE)
+============================== */
+@media (max-width: 1200px) {
+    .schedule-table { grid-template-columns: 60px repeat(7, minmax(80px,1fr)); }
+    .chat-sidebar { width: 250px; }
+}
+
+@media (max-width: 1024px) {
+    .chat-container { flex-direction: column; }
+    .chat-sidebar { width: 100%; margin-bottom: 1rem; flex-direction: row; overflow-x: auto; }
+    .chat-main { width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .events-grid { grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); }
+    .stats-section { grid-template-columns: repeat(auto-fit, minmax(100px,1fr)); }
+    .menu-search { flex-direction: column; gap: 0.5rem; }
+    .schedule-table { grid-template-columns: 50px repeat(7, minmax(60px,1fr)); }
+    .course-item { font-size: 0.65rem; }
+}
+
+@media (max-width: 480px) {
+    .chat-sidebar { flex-direction: row; overflow-x: auto; }
+    .schedule-table { grid-template-columns: 40px repeat(7, minmax(50px,1fr)); }
+    .schedule-cell { min-height: 45px; }
+    .course-item { font-size: 0.55rem; padding: 2px; }
+    .day-header { font-size: 0.65rem; padding: 3px; }
+    .legend-item { font-size: 0.65rem; gap: 0.25rem; }
+}
+
+/* ==============================
+   MISC / UTILITIES
+============================== */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+
+.btn-small {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    background: #a89a8e;
+    transition: all 0.3s ease;
+}
+
+.btn-small:hover { transform: translateY(-1px); box-shadow: 0 5px 10px rgba(61,39,31,0.1); }
+
+.btn-danger { background: #c07656; color: white; }
+.btn-danger:hover { transform: translateY(-1px); box-shadow: 0 5px 10px rgba(61,39,31,0.15); }
+
+.btn-edit { background: #8b7355; color: white; }
+.btn-edit:hover { transform: translateY(-1px); box-shadow: 0 5px 10px rgba(61,39,31,0.15); }
+
+.event-form input,
+.event-form textarea {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #d4cac0;
+    font-size: 0.85rem;
+}
+
+.event-form button { margin-top: 0.5rem; }
+
+/* ==============================
+   SCROLLBAR STYLING
+============================== */
+.chat-list::-webkit-scrollbar,
+.schedule-table::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-list::-webkit-scrollbar-thumb,
+.schedule-table::-webkit-scrollbar-thumb {
+    background: rgba(139,115,85,0.5);
+    border-radius: 3px;
+}
+
+.chat-list::-webkit-scrollbar-track,
+.schedule-table::-webkit-scrollbar-track {
+    background: #fdfbf7;
+}
+/* ==============================
+   END OF Orizon 14 CSS

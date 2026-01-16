@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: horizon-cafe-api
+    env: node
+    plan: free
+    
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    
+    envVars:
+      - key: JWT_SECRET
+        scope: run
+        value: your-secret-key-change-this
+        
+      - key: FRONTEND_URL
+        scope: run
+        value: https://horizon-cafe-api.onrender.com
+        
+      - key: EMAIL_USER
+        scope: run
+        value: your-gmail@gmail.com
+        
+      - key: EMAIL_PASSWORD
+        scope: run
+        value: your-app-password
+        
+    autoDeploy: true
+    
+  - type: static_site
+    name: horizon-cafe-frontend
+    env: static
+    plan: free
+    
+    buildCommand: echo "Serving static files"
+    publishPath: src
+    routes:
+      - path: /
+        destination: /pages/index.html
+      - path: /pages/
+        destination: /pages/

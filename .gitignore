@@ -1,0 +1,12 @@
+node_modules/
+*.db
+.env
+.env.local
+.DS_Store
+.vscode/
+.idea/
+*.log
+dist/
+build/
+.cache/
+horizon_cafe.db-journal

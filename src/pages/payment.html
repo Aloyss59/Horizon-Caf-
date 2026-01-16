@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - Horizon Café</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Roboto', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            background: #0a0a0a;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00d2ff;
+            box-shadow: 0 0 30px rgba(0,210,255,0.3);
+        }
+
+        .navbar .logo h2 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-shadow: 0 0 10px #00d2ff;
+        }
+
+        /* CONTAINER */
+        .container {
+            flex: 1;
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #0f0f0f;
+            border-radius: 15px;
+            border: 2px solid #00d2ff;
+            box-shadow: 0 0 30px rgba(0,210,255,0.2);
+        }
+
+        h1 {
+            color: #00d2ff;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .payment-summary {
+            background: rgba(0,210,255,0.1);
+            border: 1px solid rgba(0,210,255,0.3);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .summary-line strong {
+            color: #00ff88;
+        }
+
+        .summary-total {
+            border-top: 2px solid rgba(0,210,255,0.3);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* STRIPE FORM */
+        .payment-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0,210,255,0.05);
+            border: 1px solid rgba(0,210,255,0.2);
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: #666;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #00d2ff;
+            background: rgba(0,210,255,0.1);
+            box-shadow: 0 0 15px rgba(0,210,255,0.2);
+        }
+
+        #card-element {
+            padding: 0.8rem;
+            background: rgba(0,210,255,0.05);
+            border: 1px solid rgba(0,210,255,0.2);
+            border-radius: 6px;
+        }
+
+        .disclaimer-text {
+            margin-top: 0.5rem;
+            opacity: 0.5;
+            font-size: 0.9rem;
+            color: #ff6b4a;
+            font-style: italic;
+        }
+
+        .StripeElement {
+            color: #e0e0e0;
+        }
+
+        .StripeElement--focus {
+            border-color: #00d2ff;
+            background: rgba(0,210,255,0.1);
+            box-shadow: 0 0 15px rgba(0,210,255,0.2);
+        }
+
+        /* BUTTONS */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        button {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-pay {
+            background: linear-gradient(135deg, #00d2ff, #00ff88);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0,210,255,0.3);
+        }
+
+        .btn-pay:hover {
+            background: #00ffff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0,210,255,0.5);
+        }
+
+        .btn-pay:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-cancel {
+            background: #4a4a4a;
+            color: #e0e0e0;
+        }
+
+        .btn-cancel:hover {
+            background: #6a6a6a;
+            transform: translateY(-2px);
+        }
+
+        /* MESSAGES */
+        .error-message {
+            background: rgba(255, 107, 74, 0.1);
+            border: 1px solid rgba(255, 107, 74, 0.3);
+            color: #ff6b4a;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .info-message {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            color: #00ff88;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0a0a0a;
+            color: #888;
+            padding: 2rem;
+            text-align: center;
+            border-top: 2px solid #00d2ff;
+            margin-top: auto;
+        }
+
+        /* MODE CLAIR */
+        body.light-mode {
+            background: #fafaf8;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .navbar {
+            background: linear-gradient(135deg, #ffffff, #f9f6f3);
+            border-bottom-color: #ff6b4a;
+        }
+
+        body.light-mode .navbar .logo h2 {
+            color: #ff6b4a;
+            text-shadow: 0 0 15px rgba(255,107,74,0.3);
+        }
+
+        body.light-mode .container {
+            background: #ffffff;
+            border-color: #ff6b4a;
+            box-shadow: 0 0 15px rgba(255,107,74,0.1);
+        }
+
+        body.light-mode h1 {
+            color: #ff6b4a;
+            text-shadow: 0 0 15px rgba(255,107,74,0.2);
+        }
+
+        body.light-mode label {
+            color: #2c2c2c;
+        }
+
+        body.light-mode input {
+            background: rgba(255,107,74,0.05);
+            border-color: rgba(255,107,74,0.2);
+            color: #2c2c2c;
+        }
+
+        body.light-mode input:focus {
+            border-color: #ff6b4a;
+            background: rgba(255,107,74,0.1);
+            box-shadow: 0 0 15px rgba(255,107,74,0.2);
+        }
+
+        body.light-mode .btn-pay {
+            background: linear-gradient(135deg, #ff6b4a, #ff9b7a);
+            color: #ffffff;
+        }
+
+        body.light-mode .btn-pay:hover {
+            background: #ff4a20;
+        }
+
+        body.light-mode .btn-cancel {
+            background: #ffd4a0;
+            color: #2c2c2c;
+        }
+
+        body.light-mode .btn-cancel:hover {
+            background: #ff9b7a;
+        }
+
+        body.light-mode .disclaimer-text {
+            color: #ff6b4a;
+        }
+
+        body.light-mode footer {
+            background: #ffffff;
+            border-top-color: #ff6b4a;
+            color: #555;
+        }
+
+        body.light-mode .summary-line strong {
+            color: #ff6b4a;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo"><h2>Horizon Café</h2></div>
+    </nav>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        <h1><i class="fas fa-credit-card"></i> Paiement Sécurisé</h1>
+
+        <div class="info-message">
+            <i class="fas fa-lock"></i> Vos données sont chiffrées et 100% sécurisées
+        </div>
+
+        <!-- RÉSUMÉ -->
+        <div class="payment-summary">
+            <div class="summary-line">
+                <span>Montant:</span>
+                <strong id="amount-display">-</strong>
+            </div>
+            <div class="summary-line">
+                <span>Crédits obtenus:</span>
+                <strong id="credits-display">-</strong>
+            </div>
+            <div class="summary-total">
+                <span>Total à payer:</span>
+                <strong id="total-display">-</strong>
+            </div>
+        </div>
+
+        <!-- FORMULAIRE DE PAIEMENT -->
+        <form id="payment-form" class="payment-form">
+            <div class="form-group">
+                <label for="name">Nom complet</label>
+                <input type="text" id="name" placeholder="Jean Dupont" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="jean@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="card-element">Carte bancaire</label>
+                <div id="card-element"></div>
+                <p class="disclaimer-text">⚠️ Évidemment que tu ne vas pas payer, ça reste un site fictif</p>
+            </div>
+
+            <div class="error-message" id="error-message"></div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-pay" id="submit-btn">
+                    <i class="fas fa-check"></i> Payer maintenant
+                </button>
+                <button type="button" class="btn-cancel" onclick="goBack()">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 Horizon Café. Tous droits réservés. <i class="fas fa-coffee"></i></p>
+    </footer>
+
+    <script>
+        console.log('[payment.html] Page chargée');
+
+        // Récupérer les paramètres de l'URL
+        const params = new URLSearchParams(window.location.search);
+        const amountCents = parseInt(params.get('amount')) || 0;
+        const credits = parseInt(params.get('credits')) || 0;
+        const userId = params.get('userId') || 'unknown';
+
+        const amountEuro = (amountCents / 100).toFixed(2);
+
+        console.log(`[payment.html] Paramètres: ${amountEuro}€, ${credits} crédits, userId: ${userId}`);
+
+        // Afficher le résumé
+        document.getElementById('amount-display').textContent = `${amountEuro}€`;
+        document.getElementById('credits-display').textContent = `${credits}`;
+        document.getElementById('total-display').textContent = `${amountEuro}€`;
+
+        // Récupérer les infos utilisateur du localStorage
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.email) {
+            document.getElementById('email').value = user.email;
+        }
+        if (user.firstName && user.lastName) {
+            document.getElementById('name').value = `${user.firstName} ${user.lastName}`;
+        }
+
+        // Charger le thème
+        const isDarkMode = localStorage.getItem('theme') !== 'light';
+        if (!isDarkMode) {
+            document.body.classList.add('light-mode');
+        }
+
+        // SIMULATION DE PAIEMENT (Stripe réel à configurer plus tard)
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const submitBtn = document.getElementById('submit-btn');
+            const errorMsg = document.getElementById('error-message');
+
+            if (!name || !email) {
+                errorMsg.textContent = 'Veuillez remplir tous les champs';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+
+            try {
+                // SIMULATION: Appel API pour créer le paiement
+                const response = await fetch('http://localhost:5000/api/payments/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('authData') || '{}').token || ''}`
+                    },
+                    body: JSON.stringify({
+                        amount: amountCents,
+                        credits: credits,
+                        userId: user.id || userId,
+                        name: name,
+                        email: email
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Paiement réussi
+                    console.log('[payment.html] Paiement réussi:', data);
+                    
+                    // Rediriger vers confirmation
+                    localStorage.setItem('lastPayment', JSON.stringify({
+                        amount: amountEuro,
+                        credits: credits,
+                        timestamp: new Date().toISOString(),
+                        status: 'success'
+                    }));
+                    
+                    window.location.href = './payment-success.html';
+                } else {
+                    throw new Error(data.error || 'Erreur du serveur');
+                }
+            } catch (error) {
+                console.error('[payment.html] Erreur:', error);
+                errorMsg.textContent = `Erreur: ${error.message}`;
+                errorMsg.classList.add('show');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Payer maintenant';
+            }
+        });
+
+        function goBack() {
+            window.location.href = './profil.html';
+        }
+    </script>
+</body>
+</html>

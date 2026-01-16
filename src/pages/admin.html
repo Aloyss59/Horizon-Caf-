@@ -1,0 +1,1023 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Café - Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Montserrat', 'Roboto', sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+    body {
+        background: #1a1a1a;
+        color: #e0e0e0;
+        line-height: 1.5;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5 {
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    /* PASSWORD SCREEN */
+    .password-screen {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    }
+
+    .password-box {
+        background: #0f0f0f;
+        border: 2px solid #00d2ff;
+        border-radius: 12px;
+        padding: 3rem;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+        text-align: center;
+    }
+
+    .password-box h2 {
+        color: #00d2ff;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+    }
+
+    .password-box input {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 2px solid #2a2a2a;
+        background: #1a1a1a;
+        color: #00d2ff;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .password-box input:focus {
+        outline: none;
+        border-color: #00d2ff;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+    }
+
+    .password-box button {
+        width: 100%;
+        padding: 0.8rem;
+        background: linear-gradient(135deg, #00d2ff 0%, #00ff88 100%);
+        color: #000;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+    }
+
+    .password-box button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+    }
+
+    .error-msg {
+        color: #ff4a20;
+        margin-top: 1rem;
+        display: none;
+    }
+
+    /* ADMIN CONTENT */
+    .admin-screen {
+        display: none;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    /* NAVBAR */
+    .navbar {
+        width: 100%;
+        background: #0a0a0a;
+        padding: 0.8rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 0 30px rgba(0, 210, 255, 0.3), 0 4px 12px rgba(0, 0, 0, 0.8);
+        border-bottom: 2px solid #00d2ff;
+    }
+
+    .navbar .logo h2 {
+        color: #ffffff;
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff, 0 0 30px #0099cc;
+        letter-spacing: 2px;
+    }
+
+    .navbar-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn-theme-toggle {
+        background: transparent;
+        border: 2px solid #00d2ff;
+        color: #00d2ff;
+        padding: 0.6rem 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+    }
+
+    .btn-theme-toggle:hover {
+        background: rgba(0, 210, 255, 0.15);
+        transform: scale(1.15);
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+    }
+
+    .btn-logout {
+        background: #4a4a4a;
+        color: #e0e0e0;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .btn-logout:hover {
+        background: #6a6a6a;
+        transform: translateY(-2px);
+    }
+
+    /* CONTAINER */
+    .container {
+        max-width: 1400px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        flex: 1;
+    }
+
+    .container h1 {
+        text-align: center;
+        color: #00d2ff;
+        text-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+
+    /* TABLE */
+    .admin-content {
+        background: #0f0f0f;
+        border-radius: 12px;
+        padding: 2rem;
+        border: 1px solid #2a2a2a;
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    th {
+        background: #1a1a1a;
+        color: #00d2ff;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 2px solid #00d2ff;
+        font-weight: 700;
+    }
+
+    td {
+        padding: 1rem;
+        border-bottom: 1px solid #2a2a2a;
+        color: #b0b0b0;
+    }
+
+    tr:hover {
+        background: rgba(0, 210, 255, 0.05);
+    }
+
+    /* LIGHT MODE */
+    body.light-mode {
+        background: #fafaf8;
+        color: #2c2c2c;
+    }
+
+    body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4, body.light-mode h5 {
+        color: #1a1a1a;
+    }
+
+    body.light-mode .password-screen {
+        background: linear-gradient(135deg, #ffffff 0%, #f9f6f3 100%);
+    }
+
+    body.light-mode .password-box {
+        background: #ffffff;
+        border-color: #ff6b4a;
+        box-shadow: 0 0 30px rgba(255, 107, 74, 0.2);
+    }
+
+    body.light-mode .password-box h2 {
+        color: #ff6b4a;
+        text-shadow: 0 0 10px rgba(255, 107, 74, 0.3);
+    }
+
+    body.light-mode .password-box input {
+        border-color: #ffd4a0;
+        background: #fafaf8;
+        color: #ff6b4a;
+    }
+
+    body.light-mode .password-box input:focus {
+        border-color: #ff6b4a;
+        box-shadow: 0 0 10px rgba(255, 107, 74, 0.5);
+    }
+
+    body.light-mode .password-box button {
+        background: linear-gradient(135deg, #ff6b4a 0%, #ff9b7a 100%);
+        color: #ffffff;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.3);
+    }
+
+    body.light-mode .password-box button:hover {
+        box-shadow: 0 0 25px rgba(255, 107, 74, 0.6);
+    }
+
+    body.light-mode .navbar {
+        background: linear-gradient(135deg, #ffffff 0%, #f9f6f3 100%);
+        border-bottom-color: #ff6b4a;
+        box-shadow: 0 0 25px rgba(255, 107, 74, 0.2), 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode .navbar .logo h2 {
+        color: #ff6b4a;
+        text-shadow: 0 0 15px rgba(255, 107, 74, 0.3);
+    }
+
+    body.light-mode .btn-theme-toggle {
+        border-color: #ff9b7a;
+        color: #ff6b4a;
+        box-shadow: 0 0 10px rgba(255, 107, 74, 0.2);
+    }
+
+    body.light-mode .btn-theme-toggle:hover {
+        background: rgba(255, 107, 74, 0.1);
+        box-shadow: 0 0 20px rgba(255, 107, 74, 0.4);
+    }
+
+    body.light-mode .btn-logout {
+        background: #ff9b7a;
+        color: #ffffff;
+    }
+
+    body.light-mode .btn-logout:hover {
+        background: #ff6b4a;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.4);
+    }
+
+    body.light-mode .container h1 {
+        color: #ff6b4a;
+        text-shadow: 0 0 15px rgba(255, 107, 74, 0.2);
+    }
+
+    body.light-mode .admin-content {
+        background: #ffffff;
+        border: 2px solid #ffd4a0;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.1);
+    }
+
+    body.light-mode th {
+        background: #fffbf8;
+        color: #ff6b4a;
+        border-bottom-color: #ffd4a0;
+    }
+
+    body.light-mode td {
+        border-bottom-color: #ffe0cc;
+        color: #555;
+    }
+
+    body.light-mode tr:hover {
+        background: rgba(255, 107, 74, 0.05);
+    }
+
+    /* FOOTER */
+    footer {
+        background: #0a0a0a;
+        color: #888;
+        padding: 2rem;
+        text-align: center;
+        border-top: 2px solid #00d2ff;
+        box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
+        font-size: 0.9rem;
+    }
+
+    footer p {
+        color: #888;
+        margin: 0;
+    }
+
+    footer i {
+        color: #00d2ff;
+    }
+
+    body.light-mode footer {
+        background: #ffffff;
+        border-top-color: #ff6b4a;
+        color: #555;
+    }
+
+    body.light-mode footer i {
+        color: #ff6b4a;
+    }
+
+    /* ACTION BUTTONS */
+    .btn-edit-credits {
+        background: #00d2ff;
+        color: #000;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        margin-right: 0.5rem;
+    }
+
+    .btn-edit-credits:hover {
+        background: #00ffff;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+    }
+
+    body.light-mode .btn-edit-credits {
+        background: #ff6b4a;
+        color: #fff;
+    }
+
+    body.light-mode .btn-edit-credits:hover {
+        background: #ff4a20;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.5);
+    }
+
+    .btn-delete-user {
+        background: #ff4a20;
+        color: #fff;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
+
+    .btn-delete-user:hover {
+        background: #ff2a00;
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 74, 32, 0.5);
+    }
+
+    body.light-mode .btn-delete-user {
+        background: #d4664a;
+        color: #fff;
+    }
+
+    body.light-mode .btn-delete-user:hover {
+        background: #c24620;
+        box-shadow: 0 0 15px rgba(212, 102, 74, 0.5);
+    }
+
+    /* MODAL */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active {
+        display: flex;
+    }
+
+    .modal-content {
+        background: #0f0f0f;
+        border: 2px solid #00d2ff;
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+    }
+
+    .modal-content h3 {
+        color: #00d2ff;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .modal-content .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-content label {
+        display: block;
+        color: #00d2ff;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .modal-content input[type="number"],
+    .modal-content input[type="text"] {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #2a2a2a;
+        background: #1a1a1a;
+        color: #00d2ff;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .modal-content input:focus {
+        outline: none;
+        border-color: #00d2ff;
+        box-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
+    }
+
+    .modal-content .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .modal-content .btn-confirm {
+        flex: 1;
+        padding: 0.8rem;
+        background: #00d2ff;
+        color: #000;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .modal-content .btn-confirm:hover {
+        background: #00ffff;
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+    }
+
+    .modal-content .btn-cancel {
+        flex: 1;
+        padding: 0.8rem;
+        background: #4a4a4a;
+        color: #e0e0e0;
+        border: none;
+        border-radius: 6px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .modal-content .btn-cancel:hover {
+        background: #6a6a6a;
+    }
+
+    body.light-mode .modal-content {
+        background: #ffffff;
+        border-color: #ff6b4a;
+        box-shadow: 0 0 30px rgba(255, 107, 74, 0.3);
+    }
+
+    body.light-mode .modal-content h3 {
+        color: #ff6b4a;
+    }
+
+    body.light-mode .modal-content label {
+        color: #ff6b4a;
+    }
+
+    body.light-mode .modal-content input[type="number"],
+    body.light-mode .modal-content input[type="text"] {
+        border-color: #ffd4a0;
+        background: #fafaf8;
+        color: #ff6b4a;
+    }
+
+    body.light-mode .modal-content input:focus {
+        border-color: #ff6b4a;
+        box-shadow: 0 0 10px rgba(255, 107, 74, 0.5);
+    }
+
+    body.light-mode .modal-content .btn-confirm {
+        background: #ff6b4a;
+        color: #fff;
+    }
+
+    body.light-mode .modal-content .btn-confirm:hover {
+        background: #ff4a20;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.5);
+    }
+
+    body.light-mode .modal-content .btn-cancel {
+        background: #ff9b7a;
+        color: #fff;
+    }
+
+    body.light-mode .modal-content .btn-cancel:hover {
+        background: #ff6b4a;
+    }
+
+    @media (max-width: 768px) {
+        .password-box {
+            padding: 2rem;
+        }
+
+        .navbar {
+            padding: 0.8rem 1rem;
+            flex-wrap: wrap;
+        }
+
+        .navbar .logo h2 {
+            font-size: 1.2rem;
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+        }
+    }
+    </style>
+</head>
+<body>
+    <!-- PASSWORD SCREEN -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-box">
+            <h2><i class="fas fa-lock"></i> Admin Access</h2>
+            <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" />
+            <button onclick="checkPassword()">Accéder</button>
+            <div class="error-msg" id="errorMsg">❌ Mot de passe incorrect</div>
+        </div>
+    </div>
+
+    <!-- ADMIN SCREEN -->
+    <div class="admin-screen" id="adminScreen">
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="logo">
+                <h2>Horizon Café - Admin</h2>
+            </div>
+            <div class="navbar-right">
+                <button class="btn-theme-toggle" onclick="toggleTheme()" title="Changer le thème">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="btn-logout" onclick="logoutAdmin()">
+                    <i class="fas fa-sign-out-alt"></i> Quitter
+                </button>
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+        <div class="container">
+            <h1><i class="fas fa-users"></i> Gestion des Utilisateurs</h1>
+
+            <div class="admin-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="margin: 0; color: #00d2ff;"><i class="fas fa-list"></i> Liste des Utilisateurs</h2>
+                    <div id="userCount" style="color: #00d2ff; font-size: 1.1rem;">
+                        <i class="fas fa-users-count"></i> Chargement...
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card"></i> ID</th>
+                            <th><i class="fas fa-user"></i> Utilisateur</th>
+                            <th><i class="fas fa-envelope"></i> Email</th>
+                            <th><i class="fas fa-circle-user"></i> Prénom</th>
+                            <th><i class="fas fa-circle-user"></i> Nom</th>
+                            <th><i class="fas fa-calendar"></i> Création</th>
+                            <th><i class="fas fa-coins"></i> Crédits</th>
+                            <th><i class="fas fa-cog"></i> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td colspan="8" style="text-align: center; color: #888;">
+                                <i class="fas fa-spinner fa-spin"></i> Chargement des utilisateurs...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MODAL EDIT CREDITS -->
+        <div class="modal" id="creditsModal">
+            <div class="modal-content">
+                <h3><i class="fas fa-coins"></i> Gérer les Crédits</h3>
+                <div class="form-group">
+                    <label>Utilisateur:</label>
+                    <input type="text" id="modalUsername" readonly style="background: #2a2a2a; cursor: not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>Crédits actuels:</label>
+                    <input type="text" id="modalCurrentCredits" readonly style="background: #2a2a2a; cursor: not-allowed;">
+                </div>
+                <div class="form-group">
+                    <label>Ajouter des crédits:</label>
+                    <input type="number" id="creditsAmount" placeholder="Montant (positif ou négatif)" min="-1000000" max="1000000">
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom: 1rem;">Options:</label>
+                    <button style="
+                        width: 100%;
+                        padding: 0.6rem;
+                        background: #1a3a3a;
+                        color: #00d2ff;
+                        border: 2px solid #00d2ff;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+                        transition: all 0.3s;
+                    " onclick="quickAddCredits(50)" onmouseover="this.style.background='rgba(0, 210, 255, 0.2)'" onmouseout="this.style.background='#1a3a3a'">
+                        +50 crédits
+                    </button>
+                    <button style="
+                        width: 100%;
+                        padding: 0.6rem;
+                        background: #1a3a3a;
+                        color: #00d2ff;
+                        border: 2px solid #00d2ff;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        margin-bottom: 0.5rem;
+                        transition: all 0.3s;
+                    " onclick="quickAddCredits(100)" onmouseover="this.style.background='rgba(0, 210, 255, 0.2)'" onmouseout="this.style.background='#1a3a3a'">
+                        +100 crédits
+                    </button>
+                    <button style="
+                        width: 100%;
+                        padding: 0.6rem;
+                        background: #3a1a1a;
+                        color: #ff6b4a;
+                        border: 2px solid #ff6b4a;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        font-weight: 600;
+                        transition: all 0.3s;
+                    " onclick="quickRemoveCredits(50)" onmouseover="this.style.background='rgba(255, 107, 74, 0.2)'" onmouseout="this.style.background='#3a1a1a'">
+                        -50 crédits
+                    </button>
+                </div>
+                <div class="button-group">
+                    <button class="btn-confirm" onclick="saveCreditsChange()">
+                        <i class="fas fa-save"></i> Confirmer
+                    </button>
+                    <button class="btn-cancel" onclick="closeCreditsModal()">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="margin-top: auto;">
+            <p>
+                <i class="fas fa-copyright"></i> 2024 Horizon Café Admin Panel
+                <span style="color: #00d2ff; margin: 0 0.5rem;">|</span>
+                <span id="userTotal"></span>
+            </p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        const ADMIN_PASSWORD = '1234';
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyStoredTheme();
+            // Check if already have admin access
+            if (localStorage.getItem('adminAccess') === 'true') {
+                showAdminScreen();
+                loadUsers();
+            }
+        });
+
+        // Check password
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMsg');
+
+            if (input.value === ADMIN_PASSWORD) {
+                localStorage.setItem('adminAccess', 'true');
+                errorMsg.style.display = 'none';
+                showAdminScreen();
+                loadUsers();
+            } else {
+                errorMsg.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordInput = document.getElementById('passwordInput');
+            if (passwordInput) {
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') checkPassword();
+                });
+            }
+        });
+
+        // Show admin screen
+        function showAdminScreen() {
+            document.getElementById('passwordScreen').style.display = 'none';
+            document.getElementById('adminScreen').style.display = 'flex';
+        }
+
+        // Logout and return to password screen
+        function logoutAdmin() {
+            localStorage.removeItem('adminAccess');
+            document.getElementById('adminScreen').style.display = 'none';
+            document.getElementById('passwordScreen').style.display = 'flex';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        // Load users from API
+        async function loadUsers() {
+            try {
+                // Try public endpoint first (no auth required)
+                let response = await fetch('http://localhost:5000/api/auth/users/public');
+
+                if (!response.ok) {
+                    // Fallback to authenticated endpoint if public one fails
+                    response = await fetch('http://localhost:5000/api/auth/users/all', {
+                        headers: {
+                            'Authorization': 'Bearer ' + getStoredToken()
+                        }
+                    });
+                }
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch users');
+                }
+
+                const data = await response.json();
+                displayUsers(data.users || data);
+            } catch (error) {
+                console.error('Error loading users:', error);
+                document.getElementById('userTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #ff4a20;">
+                            <i class="fas fa-exclamation-triangle"></i> Erreur au chargement des utilisateurs
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Display users in table
+        function displayUsers(users) {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+
+            if (!users || users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #888;">
+                            Aucun utilisateur trouvé
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('userCount').textContent = '0 utilisateurs';
+                document.getElementById('userTotal').textContent = 'Total: 0';
+                return;
+            }
+
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                const createdDate = new Date(user.createdAt).toLocaleDateString('fr-FR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                row.innerHTML = `
+                    <td>${user.id ? user.id.substring(0, 8) : 'N/A'}...</td>
+                    <td><strong>${user.username || 'N/A'}</strong></td>
+                    <td>${user.email || 'N/A'}</td>
+                    <td>${user.firstName || '-'}</td>
+                    <td>${user.lastName || '-'}</td>
+                    <td>${createdDate}</td>
+                    <td style="font-weight: 600; color: #00ff88;">${user.credits || 0}</td>
+                    <td style="display: flex; gap: 0.5rem;">
+                        <button class="btn-edit-credits" onclick="openCreditsModal('${user.id}', '${user.username}', ${user.credits || 0})">
+                            <i class="fas fa-edit"></i> Crédits
+                        </button>
+                        <button class="btn-delete-user" onclick="deleteUser('${user.id}', '${user.username}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.getElementById('userCount').textContent = `${users.length} utilisateurs`;
+            document.getElementById('userTotal').textContent = `Total: ${users.length}`;
+        }
+
+        // Get stored auth token
+        function getStoredToken() {
+            try {
+                const authData = localStorage.getItem('authData');
+                if (authData) {
+                    const parsed = JSON.parse(authData);
+                    return parsed.token || '';
+                }
+                return localStorage.getItem('token') || '';
+            } catch {
+                return '';
+            }
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = !body.classList.contains('light-mode');
+
+            if (isDark) {
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+            }
+
+            updateThemeIcon();
+        }
+
+        // Apply stored theme
+        function applyStoredTheme() {
+            const theme = localStorage.getItem('theme') || 'dark';
+            if (theme === 'light') {
+                document.body.classList.add('light-mode');
+            } else {
+                document.body.classList.remove('light-mode');
+            }
+            updateThemeIcon();
+        }
+
+        // Update theme toggle icon
+        function updateThemeIcon() {
+            const btn = document.querySelector('.btn-theme-toggle i');
+            if (document.body.classList.contains('light-mode')) {
+                btn.className = 'fas fa-moon';
+            } else {
+                btn.className = 'fas fa-sun';
+            }
+        }
+
+        // Credits management
+        let currentEditingUserId = null;
+        let currentEditingCredits = 0;
+
+        function openCreditsModal(userId, username, currentCredits) {
+            currentEditingUserId = userId;
+            currentEditingCredits = currentCredits;
+            document.getElementById('modalUsername').value = username;
+            document.getElementById('modalCurrentCredits').value = currentCredits;
+            document.getElementById('creditsAmount').value = '';
+            document.getElementById('creditsModal').classList.add('active');
+            document.getElementById('creditsAmount').focus();
+        }
+
+        function closeCreditsModal() {
+            document.getElementById('creditsModal').classList.remove('active');
+            currentEditingUserId = null;
+        }
+
+        function quickAddCredits(amount) {
+            document.getElementById('creditsAmount').value = amount;
+        }
+
+        function quickRemoveCredits(amount) {
+            document.getElementById('creditsAmount').value = -amount;
+        }
+
+        async function saveCreditsChange() {
+            if (!currentEditingUserId) return;
+
+            const amountInput = document.getElementById('creditsAmount').value;
+            const amount = parseInt(amountInput);
+
+            if (isNaN(amount)) {
+                alert('Veuillez entrer un montant valide');
+                return;
+            }
+
+            try {
+                const newCredits = currentEditingCredits + amount;
+
+                const response = await fetch(`http://localhost:5000/api/auth/users/${currentEditingUserId}/credits`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: newCredits,
+                        operation: 'set'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la mise à jour');
+                }
+
+                const data = await response.json();
+                closeCreditsModal();
+                loadUsers(); // Reload the table
+                alert(`✅ Crédits mis à jour avec succès!\n${data.user.username}: ${data.user.credits} crédits`);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Erreur lors de la mise à jour des crédits: ' + error.message);
+            }
+        }
+
+        // Delete user
+        async function deleteUser(userId, username) {
+            if (!confirm(`⚠️ Êtes-vous sûr de vouloir supprimer l'utilisateur "${username}" ?\n\nCette action est irréversible!`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la suppression');
+                }
+
+                const data = await response.json();
+                loadUsers(); // Reload the table
+                alert(`✅ Utilisateur supprimé avec succès!\n${data.user.username} a été supprimé du système.`);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Erreur lors de la suppression de l\'utilisateur: ' + error.message);
+            }
+        }
+
+        // Close modal on background click
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('creditsModal');
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeCreditsModal();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

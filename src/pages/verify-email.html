@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vérifier votre Email - Horizon Café</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: 12px;
+      padding: 3rem;
+      max-width: 500px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #00d2ff;
+      font-size: 1.8rem;
+    }
+
+    .status {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .status.loading {
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid rgba(0, 210, 255, 0.3);
+    }
+
+    .status.success {
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+
+    .status.error {
+      background: rgba(255, 107, 74, 0.1);
+      border: 1px solid rgba(255, 107, 74, 0.3);
+    }
+
+    .status-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-message {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-details {
+      font-size: 0.95rem;
+      color: #a0a0a0;
+      margin-top: 1rem;
+    }
+
+    .spinner {
+      border: 3px solid rgba(0, 210, 255, 0.2);
+      border-top: 3px solid #00d2ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00d2ff, #00ff88);
+      color: #000;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 210, 255, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(0, 210, 255, 0.1);
+      border: 1px solid #00d2ff;
+      color: #00d2ff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(0, 210, 255, 0.2);
+    }
+
+    .info-text {
+      text-align: center;
+      color: #a0a0a0;
+      font-size: 0.95rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0, 210, 255, 0.2);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">☕</div>
+    <h1>Vérification Email</h1>
+
+    <div id="statusLoading" class="status loading">
+      <div class="spinner"></div>
+      <div class="status-message">Vérification en cours...</div>
+      <div class="status-details">Patientez quelques secondes</div>
+    </div>
+
+    <div id="statusSuccess" class="status success hidden">
+      <div class="status-icon">✓</div>
+      <div class="status-message">Email vérifié avec succès !</div>
+      <div class="status-details">Votre compte est maintenant actif. Vous pouvez vous connecter.</div>
+    </div>
+
+    <div id="statusError" class="status error hidden">
+      <div class="status-icon">✗</div>
+      <div class="status-message" id="errorMessage">Erreur de vérification</div>
+      <div class="status-details" id="errorDetails">Le token est invalide ou expiré</div>
+    </div>
+
+    <div id="successButtons" class="button-group hidden">
+      <a href="login.html?tab=login" class="btn btn-primary">Se Connecter</a>
+      <a href="../index.html" class="btn btn-secondary">Retour à l'Accueil</a>
+    </div>
+
+    <div id="errorButtons" class="button-group hidden">
+      <a href="login.html?tab=register" class="btn btn-primary">Réessayer</a>
+      <a href="../index.html" class="btn btn-secondary">Retour à l'Accueil</a>
+    </div>
+
+    <div class="info-text">
+      Besoin d'aide ? Contactez-nous à contact@horizoncafe.com
+    </div>
+  </div>
+
+  <script>
+    async function verifyEmail() {
+      try {
+        // Récupérer les paramètres de l'URL
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('token');
+        const email = params.get('email');
+
+        if (!token || !email) {
+          showError('Paramètres manquants', 'Lien de vérification invalide');
+          return;
+        }
+
+        // Envoyer la vérification au serveur
+        const response = await fetch('http://localhost:5000/api/auth/verify-email', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ token, email })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showSuccess();
+        } else {
+          showError(
+            data.error || 'Erreur de vérification',
+            'Le lien peut être expiré. Demandez un nouveau lien.'
+          );
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        showError(
+          'Erreur de connexion',
+          'Impossible de contacter le serveur. Vérifiez votre connexion.'
+        );
+      }
+    }
+
+    function showSuccess() {
+      document.getElementById('statusLoading').classList.add('hidden');
+      document.getElementById('statusSuccess').classList.remove('hidden');
+      document.getElementById('successButtons').classList.remove('hidden');
+    }
+
+    function showError(title, details) {
+      document.getElementById('statusLoading').classList.add('hidden');
+      document.getElementById('statusError').classList.remove('hidden');
+      document.getElementById('errorButtons').classList.remove('hidden');
+      document.getElementById('errorMessage').textContent = title;
+      document.getElementById('errorDetails').textContent = details;
+    }
+
+    // Lancer la vérification au chargement
+    window.addEventListener('load', verifyEmail);
+  </script>
+</body>
+</html>

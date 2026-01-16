@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizon Café - Emploi du Temps</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="../js/auth-guard.js" defer></script>
+<script src="../js/common.js" defer></script>
+<style>
+/* RESET & BASE - DARK MODE INDUSTRIEL */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Montserrat','Roboto',sans-serif;}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+body{background:#1a1a1a;color:#e0e0e0;line-height:1.5;}
+h1,h2,h3,h4,h5{font-weight:700;color:#ffffff;}
+p{font-size:0.9rem;color:#b0b0b0;}
+a{text-decoration:none;color:inherit;}
+
+/* NAVBAR - EFFET NEON */
+.navbar{width:100%;background:#0a0a0a;padding:0.8rem 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;box-shadow:0 0 30px rgba(0,210,255,0.3), 0 4px 12px rgba(0,0,0,0.8);border-bottom:2px solid #00d2ff;}
+.navbar .logo h2{color:#ffffff;font-size:1.5rem;font-weight:800;font-family:'Montserrat',sans-serif;text-shadow:0 0 10px #00d2ff, 0 0 20px #00d2ff, 0 0 30px #0099cc;letter-spacing:2px;}
+.navbar .nav-links{list-style:none;display:flex;gap:1rem;align-items:center;margin-left:2rem;}
+.navbar .nav-link{display:flex;align-items:center;gap:0.25rem;padding:0.5rem 0.75rem;border-radius:4px;color:#e0e0e0;}
+.navbar .nav-link:hover,.navbar .nav-link.active{background:rgba(100,100,100,0.2);color:#e0e0e0;}
+.navbar .user-section{display:flex;align-items:center;gap:0.5rem;margin-left:auto;color:#e0e0e0;}
+.btn-logout{background:#4a4a4a;color:#e0e0e0;border:none;padding:0.4rem 0.8rem;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:0.25rem;transition:all 0.3s;font-weight:bold;}
+.btn-logout:hover{background:#6a6a6a;transform:translateY(-2px);}
+.user-name-link{cursor:pointer;padding:0.5rem 1rem;border-radius:4px;transition:all 0.3s;font-weight:600;display:flex;align-items:center;gap:0.5rem;}
+.user-name-link:hover{background:rgba(0,210,255,0.2);color:#00d2ff;}
+.btn-theme-toggle{background:transparent;border:2px solid #00d2ff;color:#00d2ff;padding:0.6rem 0.9rem;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.3s ease, box-shadow 0.3s ease;font-size:1.1rem;margin-right:1rem;position:relative;overflow:hidden;box-shadow:0 0 10px rgba(0,210,255,0.3);}
+.btn-theme-toggle::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,210,255,0.3),transparent);transition:left 0.5s;}
+.btn-theme-toggle:hover::before{left:100%;}
+.btn-theme-toggle:hover{background:rgba(0,210,255,0.15);transform:scale(1.15);box-shadow:0 0 20px rgba(0,210,255,0.6);text-shadow:0 0 10px rgba(0,210,255,0.8);}
+
+/* MAIN */
+.container{max-width:1400px;margin:2rem auto;padding:0 1rem;}
+h1.page-title{text-align:center;font-size:2rem;color:#00d2ff;margin-bottom:1rem;font-weight:800;text-shadow:0 0 10px #00d2ff;font-family:'Montserrat',sans-serif;}
+
+/* SCHEDULE - DARK MODE */
+.schedule-wrapper{margin:30px 0;background:#0f0f0f;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.6);overflow:hidden;border:1px solid #2a2a2a;}
+.schedule-header{background:#1a1a1a;color:#e0e0e0;padding:25px;text-align:center;font-size:22px;font-weight:bold;border-bottom:1px solid #2a2a2a;font-family:'Montserrat',sans-serif;letter-spacing:1px;}
+.schedule-table{display:grid;grid-template-columns:80px repeat(7,1fr);background:#0f0f0f;min-width:600px;}
+.time-slot,.day-header,.schedule-cell{border:1px solid #2a2a2a;padding:5px;text-align:center;}
+.day-header{background:#1a1a1a;font-weight:bold;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:50px;border-bottom:1px solid #2a2a2a;}
+.day-header .day-name{font-size:13px;font-weight:700;color:#e0e0e0;}
+.day-header .day-date{font-size:10px;color:#888;}
+.time-slot{color:#888;font-size:11px;background:#0f0f0f;}
+
+.schedule-cell{position:relative;min-height:60px;overflow:hidden;border-radius:8px;cursor:pointer;background:#0f0f0f;padding:4px;}
+.course-item{width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:8px;padding:5px;font-size:10px;font-weight:bold;text-align:center;line-height:1.2;transition:all 0.3s;border:1px solid transparent;}
+
+/* === COURS - COULEURS PAR MATIERE === */
+.course-item.cours{background:#333333;color:#999999;opacity:0.75;box-shadow:inset 0 0 10px rgba(0,0,0,0.8);}
+.course-item.maths{background:#2a7f7f;color:#ffffff;opacity:0.9;}
+.course-item.physique{background:#3a5fbf;color:#ffffff;opacity:0.9;}
+.course-item.chimie{background:#bf4a8f;color:#ffffff;opacity:0.9;}
+.course-item.info{background:#2a8fff;color:#ffffff;opacity:0.9;}
+.course-item.anglais{background:#7fbf4a;color:#000000;opacity:0.9;}
+.course-item.bio{background:#4fbf4f;color:#000000;opacity:0.9;}
+.course-item.histoire{background:#d4934a;color:#000000;opacity:0.9;}
+.course-item.philo{background:#a54fbf;color:#ffffff;opacity:0.9;}
+.course-item.eco{background:#d4d44a;color:#000000;opacity:0.9;}
+.course-item.stats{background:#d4664a;color:#ffffff;opacity:0.9;}
+.course-item.semin{background:#4abfbf;color:#000000;opacity:0.9;}
+.course-item.pause{background:#222222;color:#777777;opacity:0.6;font-style:italic;}
+.course-item.sport{background:#bf4a4a;color:#ffffff;opacity:0.9;}
+.course-item.revise{background:#5f7f5f;color:#c0e0c0;opacity:0.85;}
+
+.course-item.maths:hover,.course-item.physique:hover,.course-item.chimie:hover,.course-item.info:hover,.course-item.anglais:hover,.course-item.bio:hover,.course-item.histoire:hover,.course-item.philo:hover,.course-item.eco:hover,.course-item.stats:hover,.course-item.semin:hover,.course-item.sport:hover{opacity:1;box-shadow:0 0 12px rgba(150,150,150,0.4);transform:scale(1.02);}
+
+/* === ÉVÉNEMENTS BAR - POP & ARCADE === */
+.course-item.event,.course-item.bar{background:#2a5f7f;color:#e0e0e0;font-weight:600;border:1px solid #00d2ff;box-shadow:0 0 10px rgba(0,210,255,0.3);}
+.course-item.event:hover,.course-item.bar:hover{transform:scale(1.05);background:#3a7f9f;box-shadow:0 0 15px rgba(0,210,255,0.5);}
+
+.course-item.sport{background:#6f3f5f;color:#e0e0e0;font-weight:600;border:1px solid #c060a0;box-shadow:0 0 10px rgba(192,96,160,0.3);}
+.course-item.sport:hover{transform:scale(1.05);background:#8f5f7f;box-shadow:0 0 15px rgba(192,96,160,0.5);}
+
+.course-item.seminar{background:#3f6f4f;color:#e0e0e0;font-weight:600;border:1px solid #60c080;box-shadow:0 0 10px rgba(96,192,128,0.3);}
+.course-item.seminar:hover{transform:scale(1.05);background:#5f8f6f;box-shadow:0 0 15px rgba(96,192,128,0.5);}
+
+.course-item.practical{background:#7f4f3f;color:#e0e0e0;font-weight:600;border:1px solid #d08060;box-shadow:0 0 10px rgba(208,128,96,0.3);}
+.course-item.practical:hover{transform:scale(1.05);background:#9f6f5f;box-shadow:0 0 15px rgba(208,128,96,0.5);}
+
+/* LEGEND */
+.schedule-legend{padding:15px 20px;background:#1a1a1a;display:flex;gap:20px;flex-wrap:wrap;border-top:1px solid #2a2a2a;font-size:12px;}
+.legend-item{display:flex;align-items:center;gap:8px;color:#b0b0b0;}
+.legend-color{width:20px;height:20px;border-radius:3px;border:1px solid #3a3a3a;}
+.legend-color.maths{background:#2a7f7f;}
+.legend-color.physique{background:#3a5fbf;}
+.legend-color.chimie{background:#bf4a8f;}
+.legend-color.info{background:#2a8fff;}
+.legend-color.anglais{background:#7fbf4a;}
+.legend-color.bio{background:#4fbf4f;}
+.legend-color.histoire{background:#d4934a;}
+.legend-color.philo{background:#a54fbf;}
+.legend-color.eco{background:#d4d44a;}
+.legend-color.stats{background:#d4664a;}
+.legend-color.event{background:#2a5f7f;}
+.legend-color.cours{background:#333333;opacity:0.75;}
+.legend-color.sport{background:#bf4a4a;}
+.legend-color.revise{background:#5f7f5f;}
+
+/* MODAL POPUP - DARK MODE */
+.modal{display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;overflow:auto;background:rgba(0,0,0,0.9);}
+.modal-content{background:#1a1a1a;margin:10% auto;padding:20px;border-radius:8px;max-width:400px;position:relative;box-shadow:0 4px 12px rgba(0,0,0,0.8);border:1px solid #2a2a2a;}
+.modal-close{position:absolute;top:10px;right:15px;font-size:20px;font-weight:bold;color:#e0e0e0;cursor:pointer;transition:all 0.3s;}
+.modal-close:hover{color:#a0a0a0;}
+.modal h3{margin-bottom:10px;color:#e0e0e0;font-family:'Montserrat',sans-serif;}
+.modal p{margin-bottom:5px;color:#b0b0b0;}
+
+/* MODE CLAIR */
+body.light-mode{background:#fafaf8;color:#2c2c2c;}
+body.light-mode h1,body.light-mode h2,body.light-mode h3,body.light-mode h4,body.light-mode h5{color:#1a1a1a;}
+body.light-mode p{color:#555555;}
+body.light-mode a{color:#2c2c2c;}
+body.light-mode .navbar{background:linear-gradient(135deg,#ffffff 0%,#f9f6f3 100%);border-bottom:3px solid #ff6b4a;box-shadow:0 0 25px rgba(255,107,74,0.2), 0 4px 15px rgba(0,0,0,0.08);}
+body.light-mode .navbar .logo h2{color:#ff6b4a;text-shadow:0 0 15px rgba(255,107,74,0.3);letter-spacing:2px;font-weight:900;}
+body.light-mode .navbar .nav-links{border-left:2px solid #ffd4a0;padding-left:1.5rem;}
+body.light-mode .navbar .nav-link{color:#2c2c2c;font-weight:600;}
+body.light-mode .navbar .nav-link:hover,body.light-mode .navbar .nav-link.active{background:rgba(255,107,74,0.08);color:#ff6b4a;border-radius:6px;box-shadow:0 0 10px rgba(255,107,74,0.15);}
+body.light-mode .btn-theme-toggle{border-color:#ff9b7a;color:#ff6b4a;background:rgba(255,107,74,0.05);box-shadow:0 0 10px rgba(255,107,74,0.2);}
+body.light-mode .btn-theme-toggle:hover{border-color:#ff6b4a;background:rgba(255,107,74,0.1);box-shadow:0 0 20px rgba(255,107,74,0.4);}
+body.light-mode .btn-logout{background:#ff9b7a;color:#ffffff;font-weight:700;border:none;}
+body.light-mode .btn-logout:hover{background:#ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.4);}
+body.light-mode .user-name-link:hover{background:rgba(255,107,74,0.1);color:#ff6b4a;}
+body.light-mode .user-section{color:#2c2c2c;font-weight:600;}
+body.light-mode .page-title{color:#ff6b4a;text-shadow:0 0 20px rgba(255,107,74,0.3);}
+body.light-mode .container{background:#fafaf8;}
+body.light-mode .schedule-wrapper{background:#ffffff;border:2px solid #ffd4a0;border-radius:12px;box-shadow:0 0 30px rgba(255,107,74,0.15), 0 8px 20px rgba(0,0,0,0.08);}
+body.light-mode .schedule-header{background:linear-gradient(135deg,#fff9f5 0%,#fffaf7 100%);color:#1a1a1a;border-bottom:2px solid #ffd4a0;font-weight:900;letter-spacing:1px;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
+body.light-mode .day-header{background:linear-gradient(135deg,#fffbf8 0%,#fffaf7 100%);border-color:#ffe0cc;}
+body.light-mode .day-header .day-name{color:#1a1a1a;font-weight:800;}
+body.light-mode .day-header .day-date{color:#888888;font-weight:600;}
+body.light-mode .time-slot{color:#666;background:#ffffff;border-color:#ffe0cc;font-weight:600;}
+body.light-mode .schedule-cell{background:#ffffff;border-color:#ffe0cc;}
+body.light-mode .schedule-cell:hover{background:#fffbf8;}
+body.light-mode .course-item.cours{background:#f0f0f0;color:#555;box-shadow:inset 0 0 8px rgba(0,0,0,0.05);}
+body.light-mode .course-item.maths{background:#4ebf9f;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.physique{background:#3a8fdf;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.chimie{background:#e74c8c;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.info{background:#2aa5ff;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.anglais{background:#6bb94a;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.bio{background:#5adf6f;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.histoire{background:#ff9c4a;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.philo{background:#b55fdf;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.eco{background:#ffdd4a;color:#222;opacity:0.95;}
+body.light-mode .course-item.stats{background:#ff6b4a;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.semin{background:#5adfdf;color:#222;opacity:0.95;}
+body.light-mode .course-item.pause{background:#e8e8e8;color:#666;opacity:0.7;}
+body.light-mode .course-item.sport{background:#ff5577;color:#ffffff;opacity:0.95;}
+body.light-mode .course-item.revise{background:#7faf6f;color:#ffffff;opacity:0.9;}
+body.light-mode .course-item.maths:hover,body.light-mode .course-item.physique:hover,body.light-mode .course-item.chimie:hover,body.light-mode .course-item.info:hover,body.light-mode .course-item.anglais:hover,body.light-mode .course-item.bio:hover,body.light-mode .course-item.histoire:hover,body.light-mode .course-item.philo:hover,body.light-mode .course-item.eco:hover,body.light-mode .course-item.stats:hover,body.light-mode .course-item.semin:hover,body.light-mode .course-item.sport:hover{opacity:1;box-shadow:0 0 15px rgba(255,107,74,0.3);transform:scale(1.05);}
+body.light-mode .course-item.bar{background:#ff8c42;color:#ffffff;border:2px solid #ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.3);font-weight:700;}
+body.light-mode .course-item.bar:hover{transform:scale(1.08);background:#ff6b4a;box-shadow:0 0 25px rgba(255,107,74,0.6);}
+body.light-mode .course-item.event{background:#ff8c42;color:#ffffff;border:2px solid #ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.3);font-weight:700;}
+body.light-mode .course-item.event:hover{transform:scale(1.08);background:#ff6b4a;box-shadow:0 0 25px rgba(255,107,74,0.6);}
+body.light-mode .schedule-legend{background:#fffbf8;border-top:2px solid #ffd4a0;color:#2c2c2c;}
+body.light-mode .legend-item{color:#555;font-weight:600;}
+body.light-mode .legend-color{border:2px solid #ffb399;}
+body.light-mode .modal{background:rgba(0,0,0,0.4);}
+body.light-mode .modal-content{background:#ffffff;border:2px solid #ffd4a0;box-shadow:0 0 30px rgba(255,107,74,0.25);border-radius:10px;}
+body.light-mode .modal-close{color:#ff6b4a;font-weight:900;}
+body.light-mode .modal-close:hover{color:#ff3a1a;text-shadow:0 0 10px rgba(255,107,74,0.3);}
+body.light-mode .modal h3{color:#ff6b4a;font-weight:900;}
+body.light-mode .modal p{color:#555;font-weight:600;}
+
+/* RESPONSIVE */
+@media(max-width:768px){.schedule-table{grid-template-columns:50px repeat(7,minmax(60px,1fr));} .course-item{font-size:8px;padding:2px;} .schedule-cell{min-height:50px;}}
+@media(max-width:480px){.schedule-table{grid-template-columns:40px repeat(7,minmax(50px,1fr));} .course-item{font-size:7px;} .schedule-cell{min-height:45px;}}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo"><h2>Horizon Café</h2></div>
+    <button class="btn-menu-toggle" id="btnMenuToggle" onclick="toggleMobileMenu()"></button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="./home.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a></li>
+        <li><a href="./menu.html" class="nav-link"><i class="fas fa-utensils"></i> Menu</a></li>
+        <li><a href="./schedule.html" class="nav-link active"><i class="fas fa-calendar"></i> Emploi du Temps</a></li>
+        <li><a href="./chat.html" class="nav-link"><i class="fas fa-comments"></i> Chat</a></li>
+    </ul>
+    <button class="btn-theme-toggle" id="themeToggle" title="Basculer le mode">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="user-section">
+        <span class="user-name-link" onclick="goToProfile()" title="Voir mon profil"><i class="fas fa-user-circle"></i> <span id="userGreeting">Jean Dupont</span></span>
+        <button class="btn-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </div>
+</nav>
+
+<div class="container">
+<h1 class="page-title">Votre Emploi du Temps Hebdomadaire</h1>
+
+<div class="schedule-wrapper">
+    <div class="schedule-header">Semaine du 14 - 20 janvier 2026</div>
+
+    <div class="schedule-table" id="scheduleTable"></div>
+
+    <div class="schedule-legend">
+        <div class="legend-item"><div class="legend-color maths"></div><span>Mathématiques</span></div>
+        <div class="legend-item"><div class="legend-color physique"></div><span>Physique</span></div>
+        <div class="legend-item"><div class="legend-color chimie"></div><span>Chimie</span></div>
+        <div class="legend-item"><div class="legend-color info"></div><span>Informatique</span></div>
+        <div class="legend-item"><div class="legend-color anglais"></div><span>Anglais</span></div>
+        <div class="legend-item"><div class="legend-color bio"></div><span>Biologie</span></div>
+        <div class="legend-item"><div class="legend-color histoire"></div><span>Histoire</span></div>
+        <div class="legend-item"><div class="legend-color philo"></div><span>Philosophie</span></div>
+        <div class="legend-item"><div class="legend-color eco"></div><span>Économie</span></div>
+        <div class="legend-item"><div class="legend-color stats"></div><span>Statistiques</span></div>
+        <div class="legend-item"><div class="legend-color event"></div><span>Événements Bar</span></div>
+    </div>
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="eventModal">
+  <div class="modal-content">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalType"></p>
+    <p id="modalTime"></p>
+    <p id="modalInfo"></p>
+  </div>
+</div>
+
+<script>
+// DONNEES
+const scheduleTable = document.getElementById('scheduleTable');
+const days = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+const times = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+
+// MAQUETTE FIXE DU CALENDRIER
+const fixedSchedule = {
+    0: { // LUNDI
+        events: [
+            {startHour: 0, duration: 2, title: "Mathématiques", type: "Cours", class: "cours maths", info: "Salle: A101"},
+            {startHour: 2, duration: 2, title: "Physique", type: "Cours", class: "cours physique", info: "Salle: B205"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Informatique", type: "Cours", class: "cours info", info: "Labo: C301"},
+            {startHour: 7, duration: 2, title: "Anglais", type: "Cours", class: "cours anglais", info: "Salle: D102"},
+            {startHour: 10, duration: 1, title: "Révision", type: "Révision", class: "revise", info: "Révisions"},
+            {startHour: 12, duration: 4, title: "Tournoi Fléchette", type: "Bar", class: "bar", info: "Hall Bar"}
+        ]
+    },
+    1: { // MARDI
+        events: [
+            {startHour: 0, duration: 3, title: "Chimie Générale", type: "Cours", class: "cours chimie", info: "Labo: E401"},
+            {startHour: 3, duration: 2, title: "Biologie", type: "Cours", class: "cours bio", info: "Salle: F103"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Histoire", type: "Cours", class: "cours histoire", info: "Salle: G204"},
+            {startHour: 7, duration: 2, title: "Programmation Web", type: "Cours", class: "cours info", info: "Labo: C302"},
+            {startHour: 9, duration: 1, title: "EPS", type: "Cours", class: "sport", info: "Gymnase"},
+            {startHour: 10, duration: 1, title: "Révision", type: "Révision", class: "revise", info: "Révisions"},
+            {startHour: 12, duration: 3, title: "Soirée Karaoké", type: "Bar", class: "bar", info: "Hall Bar"}
+        ]
+    },
+    2: { // MERCREDI
+        events: [
+            {startHour: 0, duration: 2, title: "Mathématiques Appliquées", type: "Cours", class: "cours maths", info: "Salle: A102"},
+            {startHour: 2, duration: 2, title: "Géographie", type: "Cours", class: "cours histoire", info: "Salle: H105"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 3, title: "Projet Scientifique", type: "Cours", class: "cours info", info: "Labo: E402"},
+            {startHour: 8, duration: 2, title: "Philosophie", type: "Cours", class: "cours philo", info: "Salle: I206"},
+            {startHour: 10, duration: 1, title: "Révision", type: "Révision", class: "revise", info: "Révisions"},
+            {startHour: 12, duration: 3, title: "Quiz Night", type: "Bar", class: "bar", info: "Hall Bar"}
+        ]
+    },
+    3: { // JEUDI
+        events: [
+            {startHour: 0, duration: 2, title: "Informatique Avancée", type: "Cours", class: "cours info", info: "Labo: C303"},
+            {startHour: 2, duration: 2, title: "Anglais Conversation", type: "Cours", class: "cours anglais", info: "Salle: D103"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Physique Nucléaire", type: "Cours", class: "cours physique", info: "Salle: B206"},
+            {startHour: 7, duration: 2, title: "Littérature", type: "Cours", class: "cours histoire", info: "Salle: J307"},
+            {startHour: 9, duration: 1, title: "Pratique Sportive", type: "Cours", class: "sport", info: "Terrain"},
+            {startHour: 10, duration: 1, title: "Révision", type: "Révision", class: "revise", info: "Révisions"},
+            {startHour: 12, duration: 3, title: "Happy Hour", type: "Bar", class: "bar", info: "Hall Bar"}
+        ]
+    },
+    4: { // VENDREDI
+        events: [
+            {startHour: 0, duration: 2, title: "Chimie Organique", type: "Cours", class: "cours chimie", info: "Labo: E403"},
+            {startHour: 2, duration: 3, title: "Biologie Moléculaire", type: "Cours", class: "cours bio", info: "Labo: F104"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Économie Politique", type: "Cours", class: "cours eco", info: "Salle: K408"},
+            {startHour: 7, duration: 2, title: "Statistiques", type: "Cours", class: "cours stats", info: "Salle: L205"},
+            {startHour: 9, duration: 1, title: "Séminaire", type: "Cours", class: "cours semin", info: "Salle: M509"},
+            {startHour: 10, duration: 1, title: "Révision", type: "Révision", class: "revise", info: "Révisions"},
+            {startHour: 12, duration: 4, title: "Vin & Fromage", type: "Bar", class: "bar", info: "Hall Bar"}
+        ]
+    },
+    5: { // SAMEDI
+        events: [
+            {startHour: 1, duration: 2, title: "Révision Mathématiques", type: "Révision", class: "revise", info: "Étude"},
+            {startHour: 3, duration: 2, title: "Révision Chimie", type: "Révision", class: "revise", info: "Étude"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Révision Physique", type: "Révision", class: "revise", info: "Étude"},
+            {startHour: 8, duration: 3, title: "Football", type: "Sport", class: "sport", info: "Terrain"}
+        ]
+    },
+    6: { // DIMANCHE
+        events: [
+            {startHour: 2, duration: 3, title: "Révision Biologie", type: "Révision", class: "revise", info: "Étude"},
+            {startHour: 4, duration: 1, title: "Pause Repas", type: "Pause", class: "pause", info: "Temps libre"},
+            {startHour: 5, duration: 2, title: "Running", type: "Sport", class: "sport", info: "Parc"},
+            {startHour: 7, duration: 2, title: "Yoga Relaxation", type: "Sport", class: "sport", info: "Studio"}
+        ]
+    }
+};
+
+// GENERER LA TABLE
+function generateSchedule(){
+    // Créer la structure de l'emploi du temps
+    let schedule = {};
+    for(let d = 0; d < 7; d++){
+        schedule[d] = {};
+        for(let t = 0; t < times.length; t++){
+            schedule[d][t] = null;
+        }
+    }
+    
+    // Remplir l'emploi du temps avec les événements fixes
+    for(let d = 0; d < 7; d++){
+        if(fixedSchedule[d]){
+            for(let event of fixedSchedule[d].events){
+                // Placer l'événement sur les créneaux horaires appropriés
+                for(let i = 0; i < event.duration; i++){
+                    let hourIndex = event.startHour + i;
+                    if(hourIndex < times.length){
+                        // Afficher l'événement à chaque heure
+                        schedule[d][hourIndex] = {
+                            title: event.title,
+                            type: event.type,
+                            class: event.class,
+                            info: event.info,
+                            duration: event.duration
+                        };
+                    }
+                }
+            }
+        }
+    }
+    
+    // Générer le HTML
+    scheduleTable.innerHTML = '';
+    scheduleTable.innerHTML += '<div class="time-slot"></div>';
+    for(let day of days){
+        scheduleTable.innerHTML += `<div class="day-header"><span class="day-name">${day}</span></div>`;
+    }
+
+    for(let t = 0; t < times.length; t++){
+        scheduleTable.innerHTML += `<div class="time-slot">${times[t]}</div>`;
+        for(let d = 0; d < 7; d++){
+            let cell = document.createElement('div');
+            cell.classList.add('schedule-cell');
+            
+            if(schedule[d][t] !== null){
+                let event = schedule[d][t];
+                cell.innerHTML = `<div class="course-item ${event.class}" data-title="${event.title}" data-type="${event.type}" data-time="${times[t]}" data-info="${event.info}">${event.title}</div>`;
+            }
+            scheduleTable.appendChild(cell);
+        }
+    }
+
+    // Ajouter click listener pour popups
+    const items = document.querySelectorAll('.course-item');
+    items.forEach(item=>{
+        item.addEventListener('click', ()=>{
+            document.getElementById('modalTitle').innerText = item.dataset.title;
+            document.getElementById('modalType').innerText = item.dataset.type;
+            document.getElementById('modalTime').innerText = `Heure: ${item.dataset.time}`;
+            document.getElementById('modalInfo').innerText = item.dataset.info;
+            document.getElementById('eventModal').style.display = 'block';
+        });
+    });
+}
+
+generateSchedule();
+
+// THEME TOGGLE
+const themeToggle = document.getElementById('themeToggle');
+const isDarkMode = localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme');
+if(!isDarkMode){document.body.classList.add('light-mode');updateThemeIcon();}
+themeToggle.addEventListener('click',()=>{
+    document.body.classList.toggle('light-mode');
+    const isLight = document.body.classList.contains('light-mode');
+    localStorage.setItem('theme',isLight?'light':'dark');
+    updateThemeIcon();
+});
+function updateThemeIcon(){
+    const icon = themeToggle.querySelector('i');
+    const isLight = document.body.classList.contains('light-mode');
+    icon.className = isLight?'fas fa-sun':'fas fa-moon';
+}
+
+// MODAL
+const modal = document.getElementById('eventModal');
+document.getElementById('modalClose').onclick = ()=>{modal.style.display='none';}
+window.onclick = (e)=>{if(e.target===modal){modal.style.display='none';}}
+
+/* FOOTER */
+footer{background:#0a0a0a;color:#888;padding:2rem;text-align:center;border-top:2px solid #00d2ff;box-shadow:0 0 20px rgba(0,210,255,0.2);margin-top:3rem;font-size:0.9rem;}
+footer p{color:#888;margin:0;}
+footer i{color:#00d2ff;}
+body.light-mode footer{background:#ffffff;border-top-color:#ff6b4a;color:#555;}
+body.light-mode footer i{color:#ff6b4a;}
+</script>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Horizon Café - Tous droits réservés | Conçu avec <i class="fas fa-heart"></i> par l'équipe</p>
+</footer>
+
+</body>
+</html>
