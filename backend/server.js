@@ -46,8 +46,19 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/payments', require('./routes/payments'));
 
 // Servir index.html pour les routes non-API (SPA)
-app.get(/^(?!\/api).*/, (req, res) => {
+app.get(/^(?!\/api).*\/$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../src/pages/index.html'));
+});
+
+// Servir les fichiers HTML spécifiques
+app.get(/\.html$/, (req, res) => {
+  const file = path.join(__dirname, '../src', req.path);
+  res.sendFile(file, (err) => {
+    if (err) {
+      res.sendFile(path.join(__dirname, '../src/pages/index.html'));
+    }
+  });
+});
 });
 
 // Health check
