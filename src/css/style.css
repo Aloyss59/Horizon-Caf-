@@ -195,6 +195,9 @@ p {
     flex-direction: column;
     gap: 4px;
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.5rem;
 }
 
 .hamburger span {
@@ -206,25 +209,64 @@ p {
     transition: all 0.3s ease;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.75rem 0;
+    }
+
+    .navbar .logo h2 {
+        font-size: 1.3rem;
+    }
+
     .navbar .nav-links {
-        display: none;
+        display: none !important;
         position: absolute;
         top: 100%;
         left: 0;
         width: 100%;
         flex-direction: column;
-        background: linear-gradient(180deg, #ff6b35, #ff8c5a);
-        border-radius: 0 0 12px 12px;
-        overflow: hidden;
+        background: linear-gradient(180deg, #6d5d56, #5d4d46);
+        border-top: 2px solid rgba(255,255,255,0.1);
+        z-index: 999;
+        padding: 1rem 0;
+    }
+
+    .navbar .nav-links li {
+        width: 100%;
+    }
+
+    .navbar .nav-link {
+        width: 100%;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
     .navbar .nav-links.show {
-        display: flex;
+        display: flex !important;
+    }
+
+    .navbar .user-section {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     .hamburger {
         display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
     }
 }
 

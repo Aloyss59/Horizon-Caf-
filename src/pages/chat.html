@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Horizon Café - Chat</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="/css/responsive.css">
 <script src="../js/auth-guard.js" defer></script>
 <script src="../js/common.js" defer></script>
 
@@ -156,9 +157,38 @@ body.light-mode .btn-cancel:hover{background:#ffb399;}
 body.light-mode .selected-count{color:#555;}
 
 @media(max-width:768px){
-    .chat-container{flex-direction:column;height:auto;}
-    .chat-sidebar{width:100%;height:auto;order:2;}
-    .chat-main{order:1;height:400px;}
+    /* NAVBAR MOBILE */
+    .navbar{padding:0.5rem 1rem;flex-wrap:wrap;}
+    .navbar .logo h2{font-size:1.2rem;}
+    .navbar .nav-links{position:absolute;top:100%;left:0;width:100%;flex-direction:column;background:#0a0a0a;display:none;border-top:2px solid #00d2ff;}
+    .navbar .nav-links.show{display:flex !important;}
+    .navbar .nav-link{width:100%;padding:0.75rem 1rem !important;border-radius:0;border-bottom:1px solid #2a2a2a;}
+    .btn-menu-toggle{display:flex !important;flex-direction:column;gap:4px;background:none;border:none;color:#00d2ff;cursor:pointer;padding:0.5rem;}
+    .btn-menu-toggle span{width:20px;height:2px;background:#00d2ff;transition:all 0.3s;}
+    .btn-menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px, 8px);}
+    .btn-menu-toggle.active span:nth-child(2){opacity:0;}
+    .btn-menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px, -7px);}
+    .btn-theme-toggle{margin-right:0.5rem;padding:0.4rem 0.6rem;font-size:0.9rem;}
+    .user-section{flex-direction:column;gap:0.25rem;margin-left:auto;font-size:0.85rem;}
+    .user-name-link{padding:0.25rem 0.5rem;}
+    .btn-logout{padding:0.3rem 0.6rem;font-size:0.8rem;}
+    
+    /* CHAT LAYOUT MOBILE */
+    .chat-container{flex-direction:column;height:auto;margin:0;padding:0;}
+    .chat-sidebar{width:100%;height:auto;order:2;border-radius:0;margin-top:1rem;}
+    .chat-main{order:1;height:300px;border-radius:0;margin:1rem 0 0 0;}
+    .chat-window{padding:0.5rem;}
+    .message{max-width:90%;}
+    .chat-input-area{padding:0.5rem;}
+    .message-input{padding:0.5rem;}
+}
+
+@media(max-width:480px){
+    .navbar .logo h2{font-size:1rem;}
+    .navbar{padding:0.4rem 0.5rem;}
+    .chat-main{height:250px;}
+    .message{font-size:0.85rem;padding:0.5rem 0.75rem;}
+    .sidebar-header h2{font-size:1rem;}
 }
 </style>
 </head>
