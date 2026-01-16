@@ -159,45 +159,71 @@ body.light-mode .btn-cancel:hover{background:#ffb399;}
 body.light-mode .selected-count{color:#555;}
 
 @media(max-width:768px){
-    /* NAVBAR MOBILE */
-    .navbar{padding:0.5rem 1rem;flex-wrap:wrap;}
-    .navbar .logo h2{font-size:1.2rem;}
-    .navbar .nav-links{position:absolute;top:100%;left:0;width:100%;flex-direction:column;background:#0a0a0a;display:none;border-top:2px solid #00d2ff;}
-    .navbar .nav-links.show{display:flex !important;}
-    .navbar .nav-link{width:100%;padding:0.75rem 1rem !important;border-radius:0;border-bottom:1px solid #2a2a2a;}
-    .btn-menu-toggle{display:flex !important;flex-direction:column;gap:4px;background:none;border:none;color:#00d2ff;cursor:pointer;padding:0.5rem;}
-    .btn-menu-toggle span{width:20px;height:2px;background:#00d2ff;transition:all 0.3s;}
-    .btn-menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px, 8px);}
-    .btn-menu-toggle.active span:nth-child(2){opacity:0;}
-    .btn-menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px, -7px);}
-    .btn-theme-toggle{margin-right:0.5rem;padding:0.4rem 0.6rem;font-size:0.9rem;}
-    .user-section{flex-direction:column;gap:0.25rem;margin-left:auto;font-size:0.85rem;}
-    .user-name-link{padding:0.25rem 0.5rem;}
-    .btn-logout{padding:0.3rem 0.6rem;font-size:0.8rem;}
+    /* NAVBAR TABLET */
+    .navbar{padding:0.5rem 0.8rem;flex-wrap:nowrap;}
+    .navbar .logo h2{font-size:1.1rem;letter-spacing:0;}
+    .navbar .nav-links{gap:0.3rem;margin-left:0.5rem;}
+    .navbar .nav-link{padding:0.3rem 0.4rem;font-size:0.75rem;}
+    .btn-menu-toggle{display:flex !important;}
+    .btn-theme-toggle{margin-right:0.3rem;padding:0.4rem 0.6rem;font-size:0.85rem;}
+    .user-section{gap:0.25rem;font-size:0.75rem;}
+    .user-name-link{padding:0.25rem 0.4rem;}
+    .btn-logout{padding:0.2rem 0.4rem;font-size:0.7rem;}
     
-    /* CHAT LAYOUT MOBILE */
-    .chat-container{flex-direction:column;height:auto;margin:0;padding:0;}
-    .chat-sidebar{width:100%;height:auto;order:2;border-radius:0;margin-top:1rem;}
-    .chat-main{order:1;height:300px;border-radius:0;margin:1rem 0 0 0;}
-    .chat-window{padding:0.5rem;}
-    .message{max-width:85%;font-size:0.85rem;padding:0.5rem 0.75rem;word-wrap:break-word;overflow-wrap:break-word;}
-    .message.user{border:1px solid #00d2ff;}
-    .message.bot{border:1px solid #2a2a2a;}
-    .chat-input-area{padding:0.5rem;gap:0.25rem;}
-    .message-input{padding:0.5rem;font-size:0.85rem;}
-    .btn-send{padding:0.5rem 0.75rem;font-size:0.85rem;}
+    /* CHAT LAYOUT TABLET */
+    .chat-container{flex-direction:column;height:auto;gap:0.5rem;margin:1rem 0;padding:0.5rem;}
+    .chat-sidebar{width:100%;height:auto;order:2;border-radius:8px;margin-top:0;}
+    .chat-main{order:1;height:350px;border-radius:8px;margin:0;}
+    .chat-list{max-height:150px;}
+    .chat-window{padding:0.5rem;gap:0.5rem;}
+    .message{max-width:85%;font-size:0.8rem;padding:0.4rem 0.6rem;}
+    .chat-input-area{padding:0.5rem;gap:0.3rem;}
+    .message-input{padding:0.4rem 0.6rem;font-size:0.8rem;}
+    .btn-send{padding:0.4rem 0.6rem;font-size:0.8rem;}
+    .sidebar-header{padding:0.75rem;}
+    .sidebar-header h2{font-size:1rem;}
+    .chat-item{padding:0.5rem;margin:0.1rem;}
+    .avatar{width:32px;height:32px;font-size:0.7rem;}
 }
 
 @media(max-width:480px){
-    .navbar .logo h2{font-size:1rem;}
-    .navbar{padding:0.4rem 0.5rem;}
-    .chat-main{height:250px;}
-    .message{font-size:0.8rem;padding:0.4rem 0.6rem;max-width:90%;border:1px solid #00d2ff !important;}
+    /* NAVBAR MOBILE */
+    .navbar{padding:0.3rem 0.5rem;}
+    .navbar .logo h2{font-size:0.95rem;letter-spacing:0;}
+    .navbar .nav-links{display:none;position:absolute;top:100%;left:0;width:100%;flex-direction:column;background:#0a0a0a;border-top:2px solid #00d2ff;z-index:999;}
+    .navbar .nav-links.show{display:flex !important;}
+    .navbar .nav-link{width:100%;padding:0.5rem 0.5rem;border-bottom:1px solid #2a2a2a;font-size:0.75rem;}
+    .btn-menu-toggle{display:flex !important;flex-direction:column;gap:3px;background:none;border:none;color:#00d2ff;padding:0.3rem;}
+    .btn-menu-toggle span{width:16px;height:2px;background:#00d2ff;}
+    .btn-menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(6px, 6px);}
+    .btn-menu-toggle.active span:nth-child(2){opacity:0;}
+    .btn-menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px);}
+    .btn-theme-toggle{margin-right:0.2rem;padding:0.3rem 0.5rem;font-size:0.8rem;}
+    .user-section{gap:0.1rem;font-size:0.65rem;order:-1;}
+    .user-name-link{padding:0.15rem 0.3rem;gap:0.2rem;font-size:0.65rem;}
+    .btn-logout{padding:0.15rem 0.3rem;font-size:0.6rem;gap:0.1rem;}
+    
+    /* CHAT LAYOUT MOBILE */
+    .chat-container{flex-direction:column;height:calc(100vh - 80px);gap:0;margin:0;padding:0;}
+    .chat-sidebar{width:100%;height:150px;order:2;border-radius:0;margin-top:0;border:none;border-top:1px solid #2a2a2a;}
+    .chat-main{order:1;height:calc(100vh - 250px);border-radius:0;margin:0;border:none;}
+    .chat-window{padding:0.3rem;gap:0.3rem;}
+    .message{max-width:90%;font-size:0.75rem;padding:0.3rem 0.5rem;border:1px solid #00d2ff !important;border-radius:6px;}
     .message.user{font-weight:600;}
     .message.bot{font-weight:500;}
-    .sidebar-header h2{font-size:1rem;}
-    .message-input{font-size:0.8rem;padding:0.4rem;}
-    .btn-send{font-size:0.8rem;padding:0.4rem 0.6rem;}
+    .chat-input-area{padding:0.3rem;gap:0.2rem;border:none;border-top:1px solid #2a2a2a;}
+    .message-input{padding:0.4rem 0.5rem;font-size:0.75rem;}
+    .btn-send{padding:0.4rem 0.5rem;font-size:0.75rem;}
+    .sidebar-header{padding:0.5rem;}
+    .sidebar-header h2{font-size:0.95rem;}
+    .chat-tabs{gap:0;}
+    .tab-btn{padding:0.4rem 0.5rem;font-size:0.7rem;}
+    .chat-item{padding:0.4rem;margin:0.05rem;}
+    .chat-info h4{font-size:0.8rem;}
+    .chat-info p{font-size:0.7rem;}
+    .avatar{width:28px;height:28px;font-size:0.6rem;}
+    .btn-new-chat{padding:0.3rem 0.5rem;font-size:0.7rem;}
+    footer{padding:0.4rem;font-size:0.7rem;}
 }
 </style>
 </head>
