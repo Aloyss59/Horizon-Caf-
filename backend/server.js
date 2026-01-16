@@ -60,7 +60,6 @@ app.get(/\.html$/, (req, res) => {
     }
   });
 });
-});
 
 // Health check
 app.get('/api/health', (req, res) => {
