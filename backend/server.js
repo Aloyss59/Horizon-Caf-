@@ -45,14 +45,15 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/payments', require('./routes/payments'));
 
-// Servir index.html pour les routes non-API (SPA)
-app.get(/^(?!\/api).*\/$/, (req, res) => {
+// Servir index.html pour la route racine
+app.get(/^\/$/, (req, res) => {
   res.sendFile(path.join(__dirname, '../src/pages/index.html'));
 });
 
-// Servir les fichiers HTML spécifiques
+// Servir les fichiers HTML spécifiques depuis /pages/
 app.get(/\.html$/, (req, res) => {
-  const file = path.join(__dirname, '../src', req.path);
+  // Vérifier si c'est un fichier dans /pages/
+  const file = path.join(__dirname, '../src/pages', req.path.replace(/^\//, ''));
   res.sendFile(file, (err) => {
     if (err) {
       res.sendFile(path.join(__dirname, '../src/pages/index.html'));
