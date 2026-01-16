@@ -17,6 +17,9 @@ const getApiUrl = () => {
     return `${window.location.protocol}//${window.location.host}/api`;
 };
 
+// Créer la variable globale API_URL
+const API_URL = getApiUrl();
+
 const getSocketUrl = () => {
     // En production sur Render
     if (window.location.hostname === 'horizon-cafe.onrender.com') {
