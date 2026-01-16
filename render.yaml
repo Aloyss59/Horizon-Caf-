@@ -1,4 +1,11 @@
 services:
+  # PostgreSQL Database
+  - type: pserv
+    name: horizon-cafe-postgres
+    plan: free
+    ipAllowList: []
+    
+  # Node.js Backend
   - type: web
     name: horizon-cafe-api
     env: node
@@ -8,6 +15,17 @@ services:
     startCommand: cd backend && node server.js
     
     envVars:
+      - key: NODE_ENV
+        scope: run
+        value: production
+        
+      - key: DATABASE_URL
+        scope: run
+        fromService:
+          type: pserv
+          name: horizon-cafe-postgres
+          property: connectionString
+        
       - key: JWT_SECRET
         scope: run
         value: your-secret-key-change-this
