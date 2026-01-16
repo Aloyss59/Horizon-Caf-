@@ -556,22 +556,289 @@
         background: #ff6b4a;
     }
 
+    /* MESSAGE CARDS */
+    .message-card {
+        background: #0f0f0f;
+        border: 1px solid #2a2a2a;
+        border-radius: 8px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
+        transition: all 0.3s;
+    }
+
+    .message-card:hover {
+        border-color: #00d2ff;
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .message-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #2a2a2a;
+        padding-bottom: 0.75rem;
+    }
+
+    .message-card-header h4 {
+        color: #00d2ff;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    .message-card-header .timestamp {
+        font-size: 0.75rem;
+        color: #888;
+    }
+
+    .message-card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .message-card-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .message-card-meta span {
+        color: #aaa;
+    }
+
+    .message-card-meta strong {
+        color: #00d2ff;
+    }
+
+    .message-content {
+        background: #1a1a1a;
+        border-left: 3px solid #00d2ff;
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: #e0e0e0;
+        max-height: 100px;
+        overflow-y: auto;
+        word-wrap: break-word;
+    }
+
+    .message-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .message-content::-webkit-scrollbar-track {
+        background: #2a2a2a;
+        border-radius: 2px;
+    }
+
+    .message-content::-webkit-scrollbar-thumb {
+        background: #00d2ff;
+        border-radius: 2px;
+    }
+
+    body.light-mode .message-card {
+        background: #ffffff;
+        border-color: #e0e0e0;
+        box-shadow: 0 0 15px rgba(255, 107, 74, 0.1);
+    }
+
+    body.light-mode .message-card:hover {
+        border-color: #ff6b4a;
+        box-shadow: 0 0 25px rgba(255, 107, 74, 0.2);
+    }
+
+    body.light-mode .message-card-header {
+        border-bottom-color: #e0e0e0;
+    }
+
+    body.light-mode .message-card-header h4 {
+        color: #ff6b4a;
+    }
+
+    body.light-mode .message-content {
+        background: #f9f6f3;
+        border-left-color: #ff6b4a;
+        color: #2c2c2c;
+    }
+
+    /* RESPONSIVE MESSAGE GRID */
     @media (max-width: 768px) {
+        body {
+            font-size: 14px;
+        }
+
         .password-box {
-            padding: 2rem;
+            padding: 1.5rem;
+            max-width: 90%;
+        }
+
+        .password-box h2 {
+            font-size: 1.4rem;
+        }
+
+        .password-box input {
+            padding: 0.6rem;
+            font-size: 0.9rem;
+        }
+
+        .password-box button {
+            padding: 0.6rem;
+            font-size: 0.9rem;
         }
 
         .navbar {
-            padding: 0.8rem 1rem;
+            padding: 0.6rem 1rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .navbar .logo h2 {
             font-size: 1.2rem;
         }
 
+        .navbar-right {
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .btn-theme-toggle,
+        .btn-logout {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            padding: 0.5rem;
+        }
+
+        .container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .container h2 {
+            font-size: 1.2rem;
+        }
+
+        table {
+            font-size: 12px;
+            overflow-x: auto;
+        }
+
+        table th,
+        table td {
+            padding: 0.5rem;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        .tabs-container {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.7rem;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
         .modal-content {
-            padding: 1.5rem;
+            padding: 1rem;
+            max-width: 95%;
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-size: 0.9rem;
+            padding: 0.6rem;
+        }
+
+        .messages-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .message-card {
+            padding: 1rem;
+        }
+
+        .message-card h4 {
+            font-size: 0.95rem;
+        }
+
+        .message-card p {
+            font-size: 0.85rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            font-size: 12px;
+        }
+
+        .password-box {
+            padding: 1rem;
+            margin: 1rem;
+        }
+
+        .password-box h2 {
+            font-size: 1.2rem;
+        }
+
+        .navbar {
+            padding: 0.5rem;
+        }
+
+        .navbar .logo h2 {
+            font-size: 1rem;
+        }
+
+        .container {
+            padding: 0.25rem;
+        }
+
+        .container h1 {
+            font-size: 1.3rem;
+        }
+
+        table {
+            font-size: 11px;
+        }
+
+        table th,
+        table td {
+            padding: 0.3rem;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 0.2rem 0.4rem;
+            font-size: 0.7rem;
+        }
+
+        .tab-btn {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .modal-content {
+            padding: 0.75rem;
         }
     }
     </style>
@@ -637,6 +904,22 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- MESSAGES SECTION -->
+            <div class="admin-content" style="margin-top: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="margin: 0; color: #00d2ff;"><i class="fas fa-comments"></i> Messages Privés</h2>
+                    <button onclick="loadMessages()" style="padding: 0.6rem 1.2rem; background: #00d2ff; color: #000; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                        <i class="fas fa-sync"></i> Rafraîchir
+                    </button>
+                </div>
+
+                <div id="messagesContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
+                    <div style="grid-column: 1/-1; text-align: center; color: #888; padding: 2rem;">
+                        <i class="fas fa-spinner fa-spin"></i> Chargement des messages...
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1016,7 +1299,86 @@
                     }
                 });
             }
+            // Load messages on page load
+            loadMessages();
         });
+
+        // Load and display all messages
+        async function loadMessages() {
+            try {
+                const container = document.getElementById('messagesContainer');
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
+
+                const response = await fetch(`${typeof API_URL !== 'undefined' ? API_URL : 'http://localhost:5000/api'}/messages/all`, {
+                    headers: {
+                        'Authorization': `Bearer ${getAuthToken()}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const messages = Array.isArray(data) ? data : (data.messages || []);
+
+                if (messages.length === 0) {
+                    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 2rem;"><i class="fas fa-inbox"></i> Aucun message privé</div>';
+                    return;
+                }
+
+                // Group messages by conversation
+                const conversations = {};
+                messages.forEach(msg => {
+                    if (msg.messageType === 'private') {
+                        const key = msg.senderId < msg.recipientId ? 
+                            `${msg.senderId}-${msg.recipientId}` : 
+                            `${msg.recipientId}-${msg.senderId}`;
+                        
+                        if (!conversations[key]) {
+                            conversations[key] = [];
+                        }
+                        conversations[key].push(msg);
+                    }
+                });
+
+                container.innerHTML = '';
+
+                Object.entries(conversations).forEach(([key, convMessages]) => {
+                    const sender = convMessages[0].senderName || `User ${convMessages[0].senderId}`;
+                    const recipient = convMessages[0].recipientName || `User ${convMessages[0].recipientId}`;
+                    const lastMsg = convMessages[convMessages.length - 1];
+                    const msgCount = convMessages.length;
+                    const timestamp = new Date(lastMsg.createdAt).toLocaleString('fr-FR');
+
+                    const card = document.createElement('div');
+                    card.className = 'message-card';
+                    card.innerHTML = `
+                        <div class="message-card-header">
+                            <h4><i class="fas fa-exchange-alt"></i> Conversation</h4>
+                            <span class="timestamp">${timestamp}</span>
+                        </div>
+                        <div class="message-card-body">
+                            <div class="message-card-meta">
+                                <div><span>De:</span> <strong>${sender}</strong></div>
+                                <div><span>À:</span> <strong>${recipient}</strong></div>
+                            </div>
+                            <div class="message-card-meta">
+                                <div><span>Messages:</span> <strong>${msgCount}</strong></div>
+                                <div><span>Dernière:</span> <strong>${new Date(lastMsg.createdAt).toLocaleTimeString('fr-FR')}</strong></div>
+                            </div>
+                            <div class="message-content">${lastMsg.content || '(aucun contenu)'}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                const container = document.getElementById('messagesContainer');
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ff4a20; padding: 2rem;"><i class="fas fa-exclamation-triangle"></i> Erreur: ${error.message}</div>`;
+            }
+        }
     </script>
     <script src="../js/responsive-nav.js" defer></script>
 </body>
