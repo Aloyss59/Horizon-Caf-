@@ -29,6 +29,35 @@
             margin-right: auto;
         }
 
+        @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+        }
+
         .cta-section {
             background: #fff8f3;
             padding: 4rem 2rem;
@@ -67,6 +96,26 @@
             font-size: 0.95rem;
         }
 
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .feature-card h3 {
+                font-size: 1rem;
+            }
+
+            .feature-card p {
+                font-size: 0.85rem;
+            }
+        }
+
         .horaires-section {
             background: #fff8f3;
             padding: 3rem 2rem;
@@ -97,6 +146,27 @@
         .horaire-card p {
             color: #5d4e47;
             font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .horaires-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+                margin: 1rem 0;
+            }
+
+            .horaire-card {
+                padding: 1rem;
+            }
+
+            .horaire-card h3 {
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .horaire-card p {
+                font-size: 0.85rem;
+            }
         }
 
         .cta-buttons {
@@ -136,6 +206,126 @@
 
         .btn-secondary:hover {
             background: #f5f1ed;
+        }
+
+        @media (max-width: 480px) {
+            .cta-buttons {
+                gap: 0.5rem;
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* NAVBAR RESPONSIVE */
+        .navbar {
+            width: 100%;
+            background: linear-gradient(90deg, #6d5d56, #8b7355);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-wrapper {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .nav-logo h2 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .nav-buttons .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+
+        /* TABLET */
+        @media (max-width: 768px) {
+            .nav-buttons .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .nav-logo h2 {
+                font-size: 1.2rem;
+            }
+
+            .nav-wrapper {
+                gap: 0.5rem;
+            }
+        }
+
+        /* MOBILE */
+        @media (max-width: 480px) {
+            .navbar .container {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .nav-wrapper {
+                gap: 0.3rem;
+                flex-wrap: nowrap;
+            }
+
+            .nav-logo h2 {
+                font-size: 1rem;
+                white-space: nowrap;
+            }
+
+            .nav-buttons {
+                gap: 0.4rem;
+                flex-wrap: nowrap;
+            }
+
+            .nav-buttons .btn {
+                padding: 0.45rem 0.7rem;
+                font-size: 0.75rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                padding: 0.45rem 0.7rem !important;
+            }
+        }
+
+        /* EXTRA SMALL */
+        @media (max-width: 360px) {
+            .nav-logo h2 {
+                font-size: 0.9rem;
+            }
+
+            .nav-buttons .btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
