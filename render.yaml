@@ -25,16 +25,3 @@ services:
         value: your-app-password
         
     autoDeploy: true
-    
-  - type: static_site
-    name: horizon-cafe-frontend
-    env: static
-    plan: free
-    
-    buildCommand: echo "Serving static files"
-    publishPath: src
-    routes:
-      - path: /
-        destination: /pages/index.html
-      - path: /pages/
-        destination: /pages/
