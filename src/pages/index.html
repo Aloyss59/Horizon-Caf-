@@ -1,0 +1,265 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizon Café - Bienvenue</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #fdfbf7, #f5f1ed);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #5d4e47;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #8b6f47;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section {
+            background: #fff8f3;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: #fff;
+            border: 1px solid #e8d5c4;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .feature-card h3 {
+            color: #8b6f47;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #5d4e47;
+            font-size: 0.95rem;
+        }
+
+        .horaires-section {
+            background: #fff8f3;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .horaires-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .horaire-card {
+            background: white;
+            border: 1px solid #e8d5c4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .horaire-card h3 {
+            color: #8b6f47;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .horaire-card p {
+            color: #5d4e47;
+            font-weight: 600;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b6f47, #a68468);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #8b6f47;
+            border: 2px solid #8b6f47;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f1ed;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="nav-logo">
+                    <h2>Horizon Café</h2>
+                </div>
+                <div class="nav-buttons">
+                    <a href="login.html" class="btn btn-primary">Connexion</a>
+                    <a href="login.html" class="btn btn-secondary">S'Inscrire</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bienvenue à Horizon Café</h1>
+            <p>Votre café étudiant préféré pour travailler, discuter et profiter d'excellent café</p>
+            <div class="cta-buttons">
+                <a href="login.html" class="btn-primary">S'Inscrire Maintenant</a>
+                <a href="login.html" class="btn-secondary">Se Connecter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Horaires -->
+    <section class="horaires-section">
+        <div class="container">
+            <h2 style="text-align: center; color: #5d4e47; margin-bottom: 1rem;">Nos Horaires</h2>
+            <div class="horaires-grid">
+                <div class="horaire-card">
+                    <h3>Lundi - Vendredi</h3>
+                    <p>7h00 - 22h00</p>
+                </div>
+                <div class="horaire-card">
+                    <h3>Samedi</h3>
+                    <p>9h00 - 23h00</p>
+                </div>
+                <div class="horaire-card">
+                    <h3>Dimanche</h3>
+                    <p>10h00 - 20h00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="text-align: center; color: #5d4e47; margin-bottom: 2rem;">Pourquoi Horizon Café?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Excellent Café</h3>
+                    <p>Les meilleurs grains sélectionnés avec soin pour votre plaisir quotidien</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Idéal pour Étudier</h3>
+                    <p>Wifi rapide, tables confortables et ambiance calme pour travailler</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Communauté Étudiante</h3>
+                    <p>Rencontrez d'autres étudiants et participez à nos événements</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Pâtisseries Fraîches</h3>
+                    <p>Fait maison chaque jour avec les meilleures ingrédients</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Commandes en Ligne</h3>
+                    <p>Commandez vos boissons et snacks et retirez quand vous voulez</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Écologique</h3>
+                    <p>Produits durables et pratiques respectueuses de l'environnement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 style="text-align: center; color: #5d4e47; margin-bottom: 1rem;">Rejoignez Horizon Café</h2>
+            <p style="text-align: center; color: #5d4e47; margin-bottom: 2rem;">Crée ton compte pour accéder à notre menu complet et passer tes commandes</p>
+            <div class="cta-buttons">
+                <a href="login.html" class="btn-primary">S'Inscrire Maintenant</a>
+                <a href="login.html" class="btn-secondary">Se Connecter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Horizon Café</h3>
+                    <p>Votre café étudiant préféré depuis 2020</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens Rapides</h4>
+                    <ul>
+                        <li><a href="login.html">Connexion</a></li>
+                        <li><a href="login.html">S'Inscrire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>contact@horizoncafe.com</p>
+                    <p>+33 1 23 45 67 89</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Horizon Café. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+
+
