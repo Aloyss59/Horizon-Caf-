@@ -1237,7 +1237,7 @@
             try {
                 const newCredits = currentEditingCredits + amount;
 
-                const response = await fetch(`http://localhost:5000/api/auth/users/${currentEditingUserId}/credits`, {
+                const response = await fetch(`${API_URL}/auth/users/${currentEditingUserId}/credits`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1269,7 +1269,7 @@
             }
 
             try {
-                const response = await fetch(`http://localhost:5000/api/auth/users/${userId}`, {
+                const response = await fetch(`${API_URL}/auth/users/${userId}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -1303,15 +1303,32 @@
             loadMessages();
         });
 
+        // Get auth token from localStorage
+        function getAuthToken() {
+            const authData = localStorage.getItem('authData');
+            if (!authData) return null;
+            try {
+                const parsed = JSON.parse(authData);
+                return parsed.token || null;
+            } catch (e) {
+                return null;
+            }
+        }
+
         // Load and display all messages
         async function loadMessages() {
             try {
                 const container = document.getElementById('messagesContainer');
                 container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #888; padding: 2rem;"><i class="fas fa-spinner fa-spin"></i> Chargement...</div>';
 
-                const response = await fetch(`${typeof API_URL !== 'undefined' ? API_URL : 'http://localhost:5000/api'}/messages/all`, {
+                const token = getAuthToken();
+                if (!token) {
+                    throw new Error('Token d\'authentification manquant');
+                }
+
+                const response = await fetch(`${API_URL}/messages/all`, {
                     headers: {
-                        'Authorization': `Bearer ${getAuthToken()}`
+                        'Authorization': `Bearer ${token}`
                     }
                 });
 
