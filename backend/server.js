@@ -34,12 +34,21 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// Servir les fichiers statiques du frontend
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../src')));
+
+// Routes API
 app.use('/api/auth', authRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/payments', require('./routes/payments'));
+
+// Servir index.html pour les routes non-API (SPA)
+app.get(/^(?!\/api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, '../src/pages/index.html'));
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
