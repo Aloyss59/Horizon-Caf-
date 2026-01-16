@@ -171,6 +171,13 @@ body.light-mode .modal p{color:#555;font-weight:600;}
 /* RESPONSIVE */
 @media(max-width:768px){.schedule-table{grid-template-columns:50px repeat(7,minmax(60px,1fr));} .course-item{font-size:8px;padding:2px;} .schedule-cell{min-height:50px;}}
 @media(max-width:480px){.schedule-table{grid-template-columns:40px repeat(7,minmax(50px,1fr));} .course-item{font-size:7px;} .schedule-cell{min-height:45px;}}
+
+/* FOOTER */
+footer{background:#0a0a0a;color:#888;padding:2rem;text-align:center;border-top:2px solid #00d2ff;box-shadow:0 0 20px rgba(0,210,255,0.2);margin-top:3rem;font-size:0.9rem;}
+footer p{color:#888;margin:0;}
+footer i{color:#00d2ff;}
+body.light-mode footer{background:#ffffff;border-top-color:#ff6b4a;color:#555;}
+body.light-mode footer i{color:#ff6b4a;}
 </style>
 </head>
 <body>
@@ -403,13 +410,6 @@ function updateThemeIcon(){
 const modal = document.getElementById('eventModal');
 document.getElementById('modalClose').onclick = ()=>{modal.style.display='none';}
 window.onclick = (e)=>{if(e.target===modal){modal.style.display='none';}}
-
-/* FOOTER */
-footer{background:#0a0a0a;color:#888;padding:2rem;text-align:center;border-top:2px solid #00d2ff;box-shadow:0 0 20px rgba(0,210,255,0.2);margin-top:3rem;font-size:0.9rem;}
-footer p{color:#888;margin:0;}
-footer i{color:#00d2ff;}
-body.light-mode footer{background:#ffffff;border-top-color:#ff6b4a;color:#555;}
-body.light-mode footer i{color:#ff6b4a;}
 </script>
 
 <!-- FOOTER -->
