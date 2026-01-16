@@ -180,17 +180,24 @@ body.light-mode .selected-count{color:#555;}
     .chat-sidebar{width:100%;height:auto;order:2;border-radius:0;margin-top:1rem;}
     .chat-main{order:1;height:300px;border-radius:0;margin:1rem 0 0 0;}
     .chat-window{padding:0.5rem;}
-    .message{max-width:90%;}
-    .chat-input-area{padding:0.5rem;}
-    .message-input{padding:0.5rem;}
+    .message{max-width:85%;font-size:0.85rem;padding:0.5rem 0.75rem;word-wrap:break-word;overflow-wrap:break-word;}
+    .message.user{border:1px solid #00d2ff;}
+    .message.bot{border:1px solid #2a2a2a;}
+    .chat-input-area{padding:0.5rem;gap:0.25rem;}
+    .message-input{padding:0.5rem;font-size:0.85rem;}
+    .btn-send{padding:0.5rem 0.75rem;font-size:0.85rem;}
 }
 
 @media(max-width:480px){
     .navbar .logo h2{font-size:1rem;}
     .navbar{padding:0.4rem 0.5rem;}
     .chat-main{height:250px;}
-    .message{font-size:0.85rem;padding:0.5rem 0.75rem;}
+    .message{font-size:0.8rem;padding:0.4rem 0.6rem;max-width:90%;border:1px solid #00d2ff !important;}
+    .message.user{font-weight:600;}
+    .message.bot{font-weight:500;}
     .sidebar-header h2{font-size:1rem;}
+    .message-input{font-size:0.8rem;padding:0.4rem;}
+    .btn-send{font-size:0.8rem;padding:0.4rem 0.6rem;}
 }
 </style>
 </head>

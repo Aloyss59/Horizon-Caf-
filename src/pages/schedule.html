@@ -73,7 +73,7 @@ h1.page-title{text-align:center;font-size:2rem;color:#00d2ff;margin-bottom:1rem;
 .course-item.maths:hover,.course-item.physique:hover,.course-item.chimie:hover,.course-item.info:hover,.course-item.anglais:hover,.course-item.bio:hover,.course-item.histoire:hover,.course-item.philo:hover,.course-item.eco:hover,.course-item.stats:hover,.course-item.semin:hover,.course-item.sport:hover{opacity:1;box-shadow:0 0 12px rgba(150,150,150,0.4);transform:scale(1.02);}
 
 /* === ÉVÉNEMENTS BAR - POP & ARCADE === */
-.course-item.event,.course-item.bar{background:#2a5f7f;color:#e0e0e0;font-weight:600;border:1px solid #00d2ff;box-shadow:0 0 10px rgba(0,210,255,0.3);}
+.course-item.event,.course-item.bar{background:#2a5f7f;color:#e0e0e0;font-weight:700;border:2px solid #00d2ff;box-shadow:0 0 10px rgba(0,210,255,0.3);font-size:11px;min-height:30px;display:flex;align-items:center;justify-content:center;}
 .course-item.event:hover,.course-item.bar:hover{transform:scale(1.05);background:#3a7f9f;box-shadow:0 0 15px rgba(0,210,255,0.5);}
 
 .course-item.sport{background:#6f3f5f;color:#e0e0e0;font-weight:600;border:1px solid #c060a0;box-shadow:0 0 10px rgba(192,96,160,0.3);}
@@ -154,7 +154,7 @@ body.light-mode .course-item.pause{background:#e8e8e8;color:#666;opacity:0.7;}
 body.light-mode .course-item.sport{background:#ff5577;color:#ffffff;opacity:0.95;}
 body.light-mode .course-item.revise{background:#7faf6f;color:#ffffff;opacity:0.9;}
 body.light-mode .course-item.maths:hover,body.light-mode .course-item.physique:hover,body.light-mode .course-item.chimie:hover,body.light-mode .course-item.info:hover,body.light-mode .course-item.anglais:hover,body.light-mode .course-item.bio:hover,body.light-mode .course-item.histoire:hover,body.light-mode .course-item.philo:hover,body.light-mode .course-item.eco:hover,body.light-mode .course-item.stats:hover,body.light-mode .course-item.semin:hover,body.light-mode .course-item.sport:hover{opacity:1;box-shadow:0 0 15px rgba(255,107,74,0.3);transform:scale(1.05);}
-body.light-mode .course-item.bar{background:#ff8c42;color:#ffffff;border:2px solid #ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.3);font-weight:700;}
+body.light-mode .course-item.bar{background:#ff8c42;color:#ffffff;border:2px solid #ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.3);font-weight:700;font-size:11px;}
 body.light-mode .course-item.bar:hover{transform:scale(1.08);background:#ff6b4a;box-shadow:0 0 25px rgba(255,107,74,0.6);}
 body.light-mode .course-item.event{background:#ff8c42;color:#ffffff;border:2px solid #ff6b4a;box-shadow:0 0 15px rgba(255,107,74,0.3);font-weight:700;}
 body.light-mode .course-item.event:hover{transform:scale(1.08);background:#ff6b4a;box-shadow:0 0 25px rgba(255,107,74,0.6);}
@@ -169,8 +169,8 @@ body.light-mode .modal h3{color:#ff6b4a;font-weight:900;}
 body.light-mode .modal p{color:#555;font-weight:600;}
 
 /* RESPONSIVE */
-@media(max-width:768px){.schedule-table{grid-template-columns:50px repeat(7,minmax(60px,1fr));} .course-item{font-size:8px;padding:2px;} .schedule-cell{min-height:50px;}}
-@media(max-width:480px){.schedule-table{grid-template-columns:40px repeat(7,minmax(50px,1fr));} .course-item{font-size:7px;} .schedule-cell{min-height:45px;}}
+@media(max-width:768px){.schedule-table{grid-template-columns:50px repeat(7,minmax(60px,1fr));} .course-item{font-size:8px;padding:2px;} .course-item.bar,.course-item.event{font-size:9px;padding:3px;font-weight:700;} .schedule-cell{min-height:50px;}}
+@media(max-width:480px){.schedule-table{grid-template-columns:40px repeat(7,minmax(50px,1fr));} .course-item{font-size:7px;} .course-item.bar,.course-item.event{font-size:8px;padding:4px;font-weight:700;border:1px solid #00d2ff;} .schedule-cell{min-height:45px;}}
 
 /* FOOTER */
 footer{background:#0a0a0a;color:#888;padding:2rem;text-align:center;border-top:2px solid #00d2ff;box-shadow:0 0 20px rgba(0,210,255,0.2);margin-top:3rem;font-size:0.9rem;}
