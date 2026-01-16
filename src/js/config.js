@@ -34,7 +34,6 @@ const getSocketUrl = () => {
 };
 
 // Exporter les URLs
-const API_URL = getApiUrl();
 const SOCKET_URL = getSocketUrl();
 
 // Afficher en console (optionnel, pour debug)
