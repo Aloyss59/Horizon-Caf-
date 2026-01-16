@@ -1,5 +1,6 @@
-// API Configuration
-const API_BASE_URL = 'http://localhost:5000/api';
+// API Configuration (dynamique)
+// Utilise config.js qui détermine l'URL selon l'environnement
+const API_BASE_URL = typeof API_URL !== 'undefined' ? API_URL : 'http://localhost:5000/api';
 
 // API Functions
 const API = {

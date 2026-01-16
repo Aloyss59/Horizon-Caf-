@@ -14,7 +14,7 @@ services:
         
       - key: FRONTEND_URL
         scope: run
-        value: https://horizon-cafe-api.onrender.com
+        value: https://horizon-cafe.onrender.com
         
       - key: EMAIL_USER
         scope: run

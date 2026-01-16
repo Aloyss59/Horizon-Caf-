@@ -3,7 +3,8 @@
 // SYSTÈME DE CHAT EN TEMPS RÉEL AVEC POLLING
 // ============================================
 
-const API_URL = 'http://localhost:5000/api';
+// API_URL est défini dans config.js (détecte automatiquement l'environnement)
+const API_URL_CHAT = typeof API_URL !== 'undefined' ? API_URL : 'http://localhost:5000/api';
 let chats = {};
 let selectedChat = null;
 let pollingInterval = null;
@@ -60,7 +61,7 @@ function startPolling() {
     if (!selectedChat) return;
     
     try {
-      const response = await fetch(`${API_URL}/messages/chat/${selectedChat}`);
+      const response = await fetch(`${API_URL_CHAT}/messages/chat/${selectedChat}`);
       if (!response.ok) return;
       
       const data = await response.json();
@@ -298,7 +299,7 @@ async function sendMessage() {
     }
     
     // Envoyer au serveur
-    const response = await fetch(`${API_URL}/messages/chat/${selectedChat}`, {
+    const response = await fetch(`${API_URL_CHAT}/messages/chat/${selectedChat}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -404,7 +405,7 @@ let availableUsers = [];
 
 async function loadAvailableUsers() {
   try {
-    const response = await fetch(`${API_URL}/auth/users/public`);
+    const response = await fetch(`${API_URL_CHAT}/auth/users/public`);
     if (!response.ok) throw new Error('Erreur fetch users');
     
     const data = await response.json();
@@ -683,7 +684,7 @@ async function deleteConversation(chatId) {
     }
     
     // Appeler l'API pour supprimer la conversation
-    const response = await fetch(`${API_URL}/messages/chat/${chatId}`, {
+    const response = await fetch(`${API_URL_CHAT}/messages/chat/${chatId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

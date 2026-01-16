@@ -1,5 +1,6 @@
-// Configuration API
-const API_URL = 'http://localhost:5000/api';
+// Configuration API (dynamique)
+// Utilise config.js qui détermine l'URL selon l'environnement
+// const API_URL = 'http://localhost:5000/api'; // Voir config.js pour l'URL dynamique
 const TOKEN_KEY = 'authToken';
 const USER_KEY = 'currentUser';
 

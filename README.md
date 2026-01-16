@@ -76,21 +76,57 @@ cd backend
 node seed.js
 ```
 
-4. **Démarrer le serveur backend**
-```bash
-node server.js
-# Serveur écoute sur http://localhost:5000
+## 🚀 Déploiement
+
+### Render (Production)
+
+L'application est déployée et accessible à:
+- **URL:** https://horizon-cafe.onrender.com
+- **Backend API:** https://horizon-cafe.onrender.com/api
+- **Frontend:** Servi depuis le même domaine
+
+#### Configuration Render
+```yaml
+services:
+  - Backend Node.js
+    - Build: cd backend && npm install
+    - Start: cd backend && node server.js
+    - Environment variables: JWT_SECRET, EMAIL_USER, EMAIL_PASSWORD, FRONTEND_URL
+
+  - Static Frontend
+    - Servi automatiquement du dossier src/
 ```
 
-5. **Servir le frontend**
-Ouvrir `src/pages/index.html` dans un serveur HTTP (Live Server, Python http.server, etc.)
-```bash
-# Avec Python
-python -m http.server 3000
+#### Déploiement automatique
+À chaque push sur GitHub (`main`), Render redéploie automatiquement l'application.
 
-# Ou avec Node.js/Express statique
-npx serve src -l 3000
+### Variables d'environnement Render
+```env
+JWT_SECRET=<your-secret-key>
+EMAIL_USER=<your-gmail@gmail.com>
+EMAIL_PASSWORD=<your-app-password>
+FRONTEND_URL=https://horizon-cafe.onrender.com
 ```
+
+## 🌐 Configuration Dynamique des URLs
+
+L'application détecte automatiquement l'environnement:
+- **En production:** Utilise `https://horizon-cafe.onrender.com`
+- **En local:** Utilise `http://localhost:5000`
+
+Voir `src/js/config.js` pour la configuration automatique.
+
+## 🚀 Déploiement en Production
+
+Pour déployer les changements sur Render:
+
+```bash
+git add -A
+git commit -m "Description des changements"
+git push origin main
+```
+
+Render redéployera automatiquement en quelques secondes!
 
 ## 🔐 Utilisateurs de Test
 

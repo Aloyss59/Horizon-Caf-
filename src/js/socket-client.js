@@ -1,5 +1,6 @@
 // Socket.io client pour chat temps réel
-const SOCKET_URL = 'http://localhost:5000';
+// SOCKET_URL est défini dans config.js (détecte automatiquement l'environnement)
+const SOCKET_URL = typeof SOCKET_URL !== 'undefined' ? SOCKET_URL : 'http://localhost:5000';
 
 class ChatSocket {
   constructor() {
