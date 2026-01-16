@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Récupérer l'utilisateur actuel
   currentUser = JSON.parse(localStorage.getItem('user'));
   if (!currentUser) {
-    window.location.href = './login.html';
+    window.location.href = '/login.html';
     return;
   }
   
@@ -294,7 +294,7 @@ async function sendMessage() {
     if (!token) {
       console.error('❌ Token manquant! Redirection vers login...');
       alert('Session expirée. Veuillez vous reconnecter.');
-      window.location.href = './login.html';
+      window.location.href = '/login.html';
       return;
     }
     
@@ -604,7 +604,7 @@ function toggleMobileMenu() {
 }
 
 function goToProfile() {
-  window.location.href = './admin.html';
+  window.location.href = '/admin.html';
 }
 
 function logout() {
@@ -613,7 +613,7 @@ function logout() {
   localStorage.removeItem('authData');
   localStorage.removeItem('user');
   localStorage.removeItem('chats');
-  window.location.href = './login.html';
+  window.location.href = '/login.html';
 }
 
 function clearAllConversations() {

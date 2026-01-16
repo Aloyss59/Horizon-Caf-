@@ -46,7 +46,7 @@ function handleLogin(e) {
             isAdmin: user.isAdmin
         }));
         
-        window.location.href = './home.html';
+        window.location.href = '/home.html';
     } else {
         alert('Email ou mot de passe incorrect!');
     }

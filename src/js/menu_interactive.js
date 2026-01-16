@@ -437,7 +437,7 @@ function continueShopping() {
 function goHome() {
     cart = [];
     localStorage.removeItem('cart');
-    window.location.href = './home.html';
+    window.location.href = '/home.html';
 }
 
 // Fermer le modal
@@ -525,7 +525,7 @@ function updateThemeIcon() {
 
 // Aller au profil
 function goToProfile() {
-    window.location.href = './profil.html';
+    window.location.href = '/profil.html';
 }
 
 // Synchroniser la commande avec le profil
@@ -562,6 +562,6 @@ function logout() {
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter?')) {
         cart = [];
         localStorage.removeItem('cart');
-        window.location.href = './login.html';
+        window.location.href = '/login.html';
     }
 }

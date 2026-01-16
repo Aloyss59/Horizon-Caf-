@@ -58,7 +58,7 @@ function checkAuth() {
     
     if (!authData || !userStr) {
         if (!window.location.pathname.includes('login.html') && !window.location.pathname.includes('index.html')) {
-            window.location.href = './login.html';
+            window.location.href = '/login.html';
         }
         return;
     }
@@ -104,6 +104,6 @@ function logout() {
     localStorage.removeItem('authData');
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    window.location.href = '../index.html';
+    window.location.href = '/';
 }
 

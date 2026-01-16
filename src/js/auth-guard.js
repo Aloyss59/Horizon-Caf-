@@ -115,7 +115,7 @@ class AuthGuard {
     localStorage.removeItem('authData');
     localStorage.removeItem('user');
     localStorage.removeItem('redirectAfterLogin');
-    window.location.href = '../index.html';
+    window.location.href = '/';
   }
 }
 

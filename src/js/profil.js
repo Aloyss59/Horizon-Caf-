@@ -293,7 +293,7 @@ function rechargeCredits() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     const userId = user.id || 'unknown';
     
-    window.location.href = `./payment.html?amount=${amountCents}&credits=${Math.floor(credits)}&userId=${userId}`;
+    window.location.href = `/payment.html?amount=${amountCents}&credits=${Math.floor(credits)}&userId=${userId}`;
 }
 
 // Recharge rapide (presets ou montant)
