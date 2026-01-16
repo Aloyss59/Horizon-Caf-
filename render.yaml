@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: horizon-cafe
+    name: horizon-cafe-api
     env: node
     plan: free
     
@@ -14,7 +14,7 @@ services:
         
       - key: FRONTEND_URL
         scope: run
-        value: https://horizon-cafe.onrender.com
+        value: https://horizon-cafe-api.onrender.com
         
       - key: EMAIL_USER
         scope: run
