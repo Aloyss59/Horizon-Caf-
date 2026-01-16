@@ -444,7 +444,7 @@
 
             try {
                 // SIMULATION: Appel API pour créer le paiement
-                const response = await fetch('http://localhost:5000/api/payments/create', {
+                const response = await fetch(`${API_URL}/payments/create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

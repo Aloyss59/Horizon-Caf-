@@ -1064,11 +1064,11 @@
         async function loadUsers() {
             try {
                 // Try public endpoint first (no auth required)
-                let response = await fetch('http://localhost:5000/api/auth/users/public');
+                let response = await fetch(`${API_URL}/auth/users/public`);
 
                 if (!response.ok) {
                     // Fallback to authenticated endpoint if public one fails
-                    response = await fetch('http://localhost:5000/api/auth/users/all', {
+                    response = await fetch(`${API_URL}/auth/users/all`, {
                         headers: {
                             'Authorization': 'Bearer ' + getStoredToken()
                         }

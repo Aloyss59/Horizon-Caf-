@@ -57,7 +57,7 @@ class AuthGuard {
   // Valider le token avec le serveur
   async validateToken(token) {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/me', {
+      const response = await fetch(`${API_URL}/auth/me`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
