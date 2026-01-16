@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: horizon-cafe-api
+    name: horizon-cafe
     env: node
     plan: free
     
